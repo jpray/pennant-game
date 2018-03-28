@@ -3,4 +3,13 @@ export class Player {
     this.id = id;
     this.points = 0;
   }
+
+  async playTurn(game) {
+      return await this.getMove();
+  }
+
+  async getMove() {
+    
+  }
+
 }

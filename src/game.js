@@ -1,15 +1,21 @@
 const NUM_POINTS_TO_WIN = 9;
 
 export class Game {
-  constructor() {
-    this.init();
+  constructor(numPlayers = 2) {
+    this.numPlayers = numPlayers;
+    this.initPlayers();
+    this.board = new Board();
+    this.currentPlayerIndex = 0;
   }
 
-  init() {
-    this.board = new Board();
-    this.players = [];
-    this.active
+  get currentPlayer() {
+    return this.players[this.currentPlayerIndex];
+  }
 
+  initPlayers() {
+    this.players = Array(this.numPlayers).map(() => {
+      return new Player();
+    });
   }
 
   hasWinner() {
@@ -18,5 +24,8 @@ export class Game {
     },false)
   }
 
+  playTurn() {
+    this.currentPlayer.playTurn(this.game);
+  }
 
 }
