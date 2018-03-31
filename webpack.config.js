@@ -21,7 +21,11 @@ module.exports = {
   entry: './src/pennant-game.js',
   output: {
     filename: 'pennant-game.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: "/dist/"
+  },
+  devServer: {
+    inline: true
   },
   module: {
   rules: [
