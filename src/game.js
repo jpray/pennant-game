@@ -1,3 +1,6 @@
+import {Board} from './board';
+import {Player} from './player';
+
 const NUM_POINTS_TO_WIN = 9;
 
 export class Game {
@@ -13,7 +16,7 @@ export class Game {
   }
 
   initPlayers() {
-    this.players = Array(this.numPlayers).map(() => {
+    this.players = Array.apply(null, Array(this.numPlayers)).map(() => {
       return new Player();
     });
   }
@@ -24,8 +27,8 @@ export class Game {
     },false)
   }
 
-  playTurn() {
-    this.currentPlayer.playTurn(this.game);
+  async playTurn() {
+    await this.currentPlayer.playTurn(this.game);
   }
 
 }

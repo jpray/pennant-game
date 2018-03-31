@@ -1,0 +1,37 @@
+{
+  "name": "pennant-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpray/pennant-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpray/pennant-game/issues"
+  },
+  "homepage": "https://github.com/jpray/pennant-game#readme",
+  "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "hyperhtml": "^2.6.0",
+    "utility-toolkit": "git+ssh://git@github.com/Voya-Financial/utility-toolkit.git#v0.16.2",
+    "web-components-core": "git+ssh://git@github.com/Voya-Financial/web-components-core.git#v0.13.0"
+  }
+}
