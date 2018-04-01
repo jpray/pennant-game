@@ -1,0 +1,23 @@
+p-board {
+  display:block;
+  max-width:400px;
+  min-width:400px;
+  max-height:400px;
+  min-height:400px;
+  border: 1px solid #CCC;
+  display:flex;
+  flex-direction: column;
+}
+
+.b-row {
+  display:flex;
+  flex-grow: 1;
+}
+
+p-cell {
+  display:flex;
+  border:1px solid #CCC;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}

@@ -14,12 +14,19 @@ export class PennantGame extends classBuilder(customElement()).with(
     constructor() {
       super();
       this.game = new Game(NUM_PLAYERS);
+			this.html = hyper(this);
     }
 
     connected() {
-      this.play();
-      alert('connected')
+			this.render();
+			//this.play();
     }
+
+		render() {
+			return this.html`
+					${this.game}
+				`;
+		}
 
     async play() {
       if (this.game.hasWinner()) {
