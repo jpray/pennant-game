@@ -1,21 +1,21 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, evented, properties, stopEvent, reactive} from 'web-components-core';
+import {customElement, events, properties, stopEvent, state} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import {Board} from './board/board';
 import {StatusBoard} from './status-board/status-board';
 import {Player} from './player';
-import {store} from './common/store';
+import {appModel} from './common/app-model';
 
 const NUM_POINTS_TO_WIN = 9;
 
 export class Game extends classBuilder(customElement()).with(
-	evented,
+	events,
 	properties,
-  reactive) {
+  state) {
 
   constructor(numPlayers = 2) {
     super();
-		this.store = store;
+		this.appModel = appModel;
     this.numPlayers = numPlayers;
     this.initPlayers();
     this.board = new Board();
@@ -35,7 +35,7 @@ export class Game extends classBuilder(customElement()).with(
 
 	handleGameEvent(e) {
 		let details = e.details;
-		this.store.handleEvent(details);
+		//this.appModel.handleEvent(details);
 	}
 
   get currentPlayer() {

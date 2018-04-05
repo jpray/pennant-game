@@ -1,13 +1,13 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, evented, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import './status-board.css';
 import delegate from 'dom-delegate';
 //import {getCurrentPlayer} from '../common/providers/current-player';
-import {store} from '../common/store';
+import {appModel} from '../common/app-model';
 
 export class StatusBoard extends classBuilder(customElement()).with(
-	evented,
+	events,
 	properties) {
   constructor() {
     super();
@@ -15,27 +15,28 @@ export class StatusBoard extends classBuilder(customElement()).with(
 		this.delegateEl = delegate(this);
 		this.addEventListeners();
 
-    // this.currentPlayer = store.getValue(store.accessors.CURRENT_PLAYER);
-    // store.watch(store.accessors.CURRENT_PLAYER, 'currentPlayer', this);
-    // store.setValue(store.accessors.CURRENT_PLAYER, 1);
-    // store.syncProperty({
+    // this.currentPlayer = appModel.getValue(appModel.accessors.CURRENT_PLAYER);
+    // appModel.watch(appModel.accessors.CURRENT_PLAYER, 'currentPlayer', this);
+    // appModel.set(appModel.accessors.CURRENT_PLAYER, 1);
+    // appModel.syncProperty({
     //   target: this,
     //   targetProperty: 'currentPlayer',
-    //   accessor: store.accessors.CURRENT_PLAYER,
+    //   accessor: appModel.accessors.CURRENT_PLAYER,
     // })
 
-    store.syncProperties(this,
-			['currentPlayer', store.accessors.CURRENT_PLAYER]);
-    store.setValue(store.accessors.CURRENT_PLAYER, 1);
+    appModel.syncProperties(this,
+			['currentPlayer', appModel.accessors.CURRENT_PLAYER]);
+			debugger;
+    appModel.set(appModel.accessors.CURRENT_PLAYER, 1);
 
   }
 
   connected() {
-    store.unpauseSync(this);
+    appModel.unpauseSync(this);
   }
 
   disconnected() {
-    store.pauseSync(this);
+    appModel.pauseSync(this);
   }
 
   static get properties() {

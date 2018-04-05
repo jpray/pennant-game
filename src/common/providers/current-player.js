@@ -1,9 +1,9 @@
-import {store} from '../store';
+import {appModel} from '../app-model';
 
 export function getCurrentPlayer() {
-  return store.state.game.currentPlayer;
+  return appModel.state.game.currentPlayer;
 }
 
 export function setCurrentPlayer(value) {
-  store.state.game.currentPlayer = value;
+  appModel.state.game.currentPlayer = value;
 }

@@ -1,12 +1,12 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, evented, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import {Cell} from './cell';
 import './board.css';
 import delegate from 'dom-delegate';
 
 export class Board extends classBuilder(customElement()).with(
-	evented,
+	events,
 	properties) {
   constructor() {
     super();

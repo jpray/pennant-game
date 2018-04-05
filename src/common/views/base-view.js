@@ -1,11 +1,11 @@
 
 import {default as hyper} from 'hyperhtml/esm/index';
 import {classBuilder} from 'utility-toolkit';
-import {defineElement, customElement, evented, properties} from 'web-components-core';
+import {defineElement, customElement, events, properties} from 'web-components-core';
 
 export class BaseView extends classBuilder(customElement()).with(
 	defineElement,
-	evented,
+	events,
 	properties) {
     // constructor() {
     //   //super();

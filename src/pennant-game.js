@@ -2,14 +2,14 @@
 import './pennant-game.css'; // eslint-disable-line import/no-unassigned-import, import/extensions
 
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, evented, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import {Game} from './game';
 
 const NUM_PLAYERS = 2;
 
 export class PennantGame extends classBuilder(customElement()).with(
-	evented,
+	events,
 	properties) {
     constructor() {
       super();

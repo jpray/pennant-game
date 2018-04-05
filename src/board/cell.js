@@ -1,9 +1,9 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, evented, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 
 export class Cell extends classBuilder(customElement()).with(
-	evented,
+	events,
 	properties) {
   constructor() {
     super();
