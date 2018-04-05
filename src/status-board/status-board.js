@@ -15,7 +15,6 @@ export class StatusBoard extends classBuilder(customElement()).with(
 		this.delegateEl = delegate(this);
 		this.addEventListeners();
 
-
     // this.currentPlayer = store.getValue(store.accessors.CURRENT_PLAYER);
     // store.watch(store.accessors.CURRENT_PLAYER, 'currentPlayer', this);
     // store.setValue(store.accessors.CURRENT_PLAYER, 1);
@@ -25,7 +24,8 @@ export class StatusBoard extends classBuilder(customElement()).with(
     //   accessor: store.accessors.CURRENT_PLAYER,
     // })
 
-    store.syncProperties(this, ['currentPlayer', store.accessors.CURRENT_PLAYER]);
+    store.syncProperties(this,
+			['currentPlayer', store.accessors.CURRENT_PLAYER]);
     store.setValue(store.accessors.CURRENT_PLAYER, 1);
 
   }

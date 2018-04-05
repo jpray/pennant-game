@@ -87,7 +87,7 @@ class Store {
     let {propName, path} = delveSplit(accessor);
     let obj = delve(currentState, path);
     obj[propName] = value;
-    this.setState(currentState);
+    this._setState(currentState, accessor);
   }
 
   getState(accessor='') {
@@ -95,24 +95,10 @@ class Store {
     return jsonClone(delve(this.state, path) || this.state);
   }
 
-  setState(newState) {
+  _setState(newState, accessor) {
     const currentState = this.getState();
     this.state = newState;
-    this.processSyncedProperties();
-  }
-
-  // watch(accessor='', targetProperty='', el) {
-  //   this.syncedPropertiesData.set(el, {
-  //     accessor: accessor,
-  //     targetProperty: targetProperty
-  //   });
-  // }
-
-  syncProperty(opts) {
-    this.syncedPropertiesData.set(opts.target, {
-      accessor: opts.accessor,
-      targetProperty: opts.targetProperty
-    });
+    this.processSyncedPropertiesBasedOnAccessor(accessor);
   }
 
   syncProperties(target, ...propsArray) {
@@ -124,7 +110,7 @@ class Store {
         targetProperty: targetProperty
       });
     })
-    this.processSyncedProperties(target);
+    this.processSyncedPropertiesBasedOnTarget(target);
   }
 
   pauseSync(el) {
@@ -141,7 +127,17 @@ class Store {
     }
   }
 
-  processSyncedProperties(target=null) {
+  processSyncedPropertiesBasedOnAccessor(accessor) {
+    this.syncedPropertiesData.forEach((opts, el) => {
+      //TODO: this check is naive currently
+      if (accessor.indexOf(opts.accessor) === -1) {
+        return;
+      }
+      el[opts.targetProperty] = this.getValue(opts.accessor);
+    })
+  }
+
+  processSyncedPropertiesBasedOnTarget(target=null) {
     this.syncedPropertiesData.forEach((opts, el) => {
       if (target && target !== el) {
         return;
