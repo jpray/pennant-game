@@ -1,32 +1,28 @@
 import {default as hyper} from 'hyperhtml/esm/index';
 import {customElement, evented, properties, stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
-import {Cell} from './cell';
-import './board.css';
+import './status-board.css';
 import delegate from 'dom-delegate';
+//import {getCurrentPlayer} from '../common/providers/current-player';
+import {store} from '../common/store';
 
-export class Board extends classBuilder(customElement()).with(
+export class StatusBoard extends classBuilder(customElement()).with(
 	evented,
 	properties) {
   constructor() {
     super();
     this.html = hyper(this);
-    this.grid = Array.apply(null, Array(5)).map(() => {
-      return Array.apply(null, Array(5)).map(() => {
-        return null;
-      })
-    })
 		this.delegateEl = delegate(this);
 		this.addEventListeners();
+
+    store.setValue(store.accessors.CURRENT_PLAYER, 1);
+    this.currentPlayer = store.getValue(store.accessors.CURRENT_PLAYER);
   }
+
   render() {
     return this.html`
-      ${this.grid.map(row => hyper.wire(row)`<div class="b-row">
-        ${row.map(cell => hyper.wire(cell)`
-          <p-cell piece=></p-cell>
-          `)}
-      </div>`)}
-      `;
+      Player ${this.currentPlayer+1}'s Turn.
+    `;
   }
 	addEventListeners() {
 		this.delegateEl.on('click', 'p-cell', (e) => {
@@ -35,4 +31,4 @@ export class Board extends classBuilder(customElement()).with(
 	}
 }
 
-Board.define('p-board');
+StatusBoard.define('status-board');
