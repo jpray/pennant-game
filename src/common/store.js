@@ -1,5 +1,22 @@
 import delve from 'dlv';
 
+function delveSplit(accessor) {
+  let lastDotPos = accessor.lastIndexOf('.');
+  if (lastDotPos) {
+    let propName = accessor.slice(lastDotPos+1);
+    let path = accessor.slice(0,lastDotPos);
+    return {
+      propName,
+      path
+    }
+  } else {
+    return {
+      propName : accessor,
+      path: ''
+    }
+  }
+}
+
 function jsonClone(value) {
   try {
     return JSON.clone(JSON.stringify(value));
@@ -49,6 +66,7 @@ class Store {
       }
     }
     //this.setupEvents();
+    this.watchers = new Map();
   }
 
   get accessors() {
@@ -66,25 +84,35 @@ class Store {
   }
 
   setValue(accessor, value) {
-    let lastDotPos = accessor.lastIndexOf('.');
-    let propName;
-    if (lastDotPos) {
-      propName = accessor.slice(lastDotPos+1);
-      accessor = accessor.slice(0,lastDotPos);
-    }
-    let obj = delve(this.state, accessor);
+    let currentState = this.getState();
+    let {propName, path} = delveSplit(accessor);
+    let obj = delve(currentState, path);
     obj[propName] = value;
+    this.setState(currentState);
   }
 
   getState(accessor='') {
     let path = typeof accessor === 'function' ? accessor(jsonClone(this.state)) : accessor;
-    return jsonClone(delve(this.state, path));
+    return jsonClone(delve(this.state, path) || this.state);
   }
 
   setState(newState) {
     const currentState = this.getState();
-
     this.state = newState;
+    this.processWatchers();
+  }
+
+  watch(accessor='', watcherPropName='', el) {
+    this.watchers.set(el, {
+      accessor: accessor,
+      watcherPropName: watcherPropName
+    });
+  }
+
+  processWatchers() {
+    this.watchers.forEach((data, el) => {
+      el[data.watcherPropName] = this.getValue(data.accessor);
+    })
   }
 
   handleEvent(details) {
