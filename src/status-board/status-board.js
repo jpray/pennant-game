@@ -16,10 +16,26 @@ export class StatusBoard extends classBuilder(customElement()).with(
 		this.addEventListeners();
 
 
-    this.currentPlayer = store.getValue(store.accessors.CURRENT_PLAYER);
-    store.watch(store.accessors.CURRENT_PLAYER, 'currentPlayer', this);
+    // this.currentPlayer = store.getValue(store.accessors.CURRENT_PLAYER);
+    // store.watch(store.accessors.CURRENT_PLAYER, 'currentPlayer', this);
+    // store.setValue(store.accessors.CURRENT_PLAYER, 1);
+    // store.syncProperty({
+    //   target: this,
+    //   targetProperty: 'currentPlayer',
+    //   accessor: store.accessors.CURRENT_PLAYER,
+    // })
+
+    store.syncProperties(this, ['currentPlayer', store.accessors.CURRENT_PLAYER]);
     store.setValue(store.accessors.CURRENT_PLAYER, 1);
 
+  }
+
+  connected() {
+    store.unpauseSync(this);
+  }
+
+  disconnected() {
+    store.pauseSync(this);
   }
 
   static get properties() {

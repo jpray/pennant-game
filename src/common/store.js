@@ -66,7 +66,8 @@ class Store {
       }
     }
     //this.setupEvents();
-    this.watchers = new Map();
+    this.syncedPropertiesData = new Map();
+    this.syncedPropertiesDataPaused = new WeakMap();
   }
 
   get accessors() {
@@ -99,19 +100,51 @@ class Store {
   setState(newState) {
     const currentState = this.getState();
     this.state = newState;
-    this.processWatchers();
+    this.processSyncedProperties();
   }
 
-  watch(accessor='', watcherPropName='', el) {
-    this.watchers.set(el, {
-      accessor: accessor,
-      watcherPropName: watcherPropName
+  // watch(accessor='', targetProperty='', el) {
+  //   this.syncedPropertiesData.set(el, {
+  //     accessor: accessor,
+  //     targetProperty: targetProperty
+  //   });
+  // }
+
+  syncProperty(opts) {
+    this.syncedPropertiesData.set(opts.target, {
+      accessor: opts.accessor,
+      targetProperty: opts.targetProperty
     });
   }
 
-  processWatchers() {
-    this.watchers.forEach((data, el) => {
-      el[data.watcherPropName] = this.getValue(data.accessor);
+  syncProperties(target, ...propsArray) {
+    propsArray.forEach((propData) => {
+      let targetProperty = propData[0];
+      let accessor = propData[1];
+      this.syncedPropertiesData.set(target, {
+        accessor: accessor,
+        targetProperty: targetProperty
+      });
+    })
+  }
+
+  pauseSync(el) {
+    if (this.syncedPropertiesData.has(el)) {
+      this.syncedPropertiesDataPaused.set(el, this.syncedPropertiesData.get(el));
+      this.syncedPropertiesData.delete(el);
+    }
+  }
+
+  unpauseSync(el) {
+    if (this.syncedPropertiesDataPaused.has(el)) {
+      this.syncedPropertiesData.set(el, this.syncedPropertiesDataPaused.get(el));
+      this.syncedPropertiesDataPaused.delete(el);
+    }
+  }
+
+  processSyncedProperties() {
+    this.syncedPropertiesData.forEach((opts, el) => {
+      el[opts.targetProperty] = this.getValue(opts.accessor);
     })
   }
 
