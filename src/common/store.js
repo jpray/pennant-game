@@ -62,7 +62,8 @@ class Store {
       pieces: [],
       board: {},
       game: {
-        currentPlayer: 0
+        currentPlayer: 0,
+        somethingElse: [{foo: 'bye'}]
       }
     }
     //this.setupEvents();
@@ -73,10 +74,7 @@ class Store {
   get accessors() {
     return {
       CURRENT_PLAYER: 'game.currentPlayer',
-      GAME: 'game',
-      SOMETHING_ELSE: (state) => {
-        return 'game.something[0].somethingElse';
-      }
+      GAME: 'game'
     }
   }
 
@@ -126,6 +124,7 @@ class Store {
         targetProperty: targetProperty
       });
     })
+    this.processSyncedProperties(target);
   }
 
   pauseSync(el) {
@@ -142,8 +141,11 @@ class Store {
     }
   }
 
-  processSyncedProperties() {
+  processSyncedProperties(target=null) {
     this.syncedPropertiesData.forEach((opts, el) => {
+      if (target && target !== el) {
+        return;
+      }
       el[opts.targetProperty] = this.getValue(opts.accessor);
     })
   }
