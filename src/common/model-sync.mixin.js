@@ -66,8 +66,6 @@ export const modelSync = (baseClass) => {
       })
     }
 
-
-
 	};
 
   adviceAfter(afterSetStateAdvice(), '_setState')(ModelSync);

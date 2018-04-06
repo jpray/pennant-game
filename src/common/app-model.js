@@ -4,9 +4,18 @@ import {modelSync} from './model-sync.mixin';
 
 
 class AppModel extends classBuilder(class{}).with(model, modelSync) {
+
   constructor() {
     super();
-    this.state = {
+
+    this.accessors = {
+      CURRENT_PLAYER: 'game.currentPlayer',
+      GAME: 'game'
+    };
+  }
+
+  get defaultState() {
+    return {
       players: [],
       pieces: [],
       board: {},
@@ -14,15 +23,7 @@ class AppModel extends classBuilder(class{}).with(model, modelSync) {
         currentPlayer: 0,
         somethingElse: [{foo: 'bye'}]
       }
-    }
-
-  }
-
-  get accessors() {
-    return {
-      CURRENT_PLAYER: 'game.currentPlayer',
-      GAME: 'game'
-    }
+    };
   }
 
 }

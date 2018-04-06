@@ -1,4 +1,5 @@
-import {global, objectAssign, adviceBefore, functionName, createStorage, microTask} from 'utility-toolkit';
+import {uniqueString, objectAssign, objectDeepFreeze, adviceAfter} from 'utility-toolkit';
+//import {global, objectAssign, adviceBefore, functionName, createStorage, microTask} from 'utility-toolkit';
 import delve from 'dlv';
 
 function delveSplit(accessor) {
@@ -28,34 +29,41 @@ function jsonClone(value) {
 
 export const model = (baseClass) => {
 
-  return class BaseModel {
+  const stateKey = uniqueString.get('_state');
+
+  return class Model {
     constructor() {
-      this.state = {};
+      this.accessors = {};
+      this.setState(this.defaultState);
     }
 
-    get accessors() {
-      return {}
-    }
+    get defaultState(){
+			return {};
+		}
+
+		get state() {
+			return this[stateKey];
+		}
 
     get(accessor) {
-      return this._getState(accessor);
+      return this.getState(accessor);
     }
 
     set(accessor, value) {
-      let newState = this._getState();
+      let newState = this.getState();
       let {propName, path} = delveSplit(accessor);
       let obj = delve(newState, path);
       obj[propName] = value;
-      this._setState(newState, accessor);
+      this.setState(newState, accessor);
     }
 
-    _getState(accessor='') {
-      return jsonClone(accessor ? delve(this.state, accessor) : this.state);
+    getState(accessor='') {
+      return jsonClone(accessor ? delve(this[stateKey], accessor) : this[stateKey]);
     }
 
-    _setState(newState, accessor) {
-      const currentState = this._getState();
-      this.state = newState;
+    setState(newState, accessor) {
+      const currentState = this.getState();
+      this[stateKey] = newState;
     }
 
   }
