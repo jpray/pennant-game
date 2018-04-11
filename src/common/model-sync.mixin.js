@@ -5,7 +5,6 @@ import {adviceAfter, uniqueString} from 'utility-toolkit';
  * Mixin adds CustomEvent handling to an element
  */
 export const modelSync = (baseClass) => {
-	const eventsHandlersRef = uniqueString.get('_eventsHandlers');
 
 	function afterSetStateAdvice() {
 		return function (newState, accessor) {
@@ -48,6 +47,9 @@ export const modelSync = (baseClass) => {
     }
 
     processSyncedPropertiesBasedOnAccessor(accessor) {
+			if (!this.syncedPropertiesData) {
+				return;
+			}
       this.syncedPropertiesData.forEach((opts, el) => {
         //TODO: this check is naive currently
         if (accessor.indexOf(opts.accessor) === -1) {
@@ -58,6 +60,9 @@ export const modelSync = (baseClass) => {
     }
 
     processSyncedPropertiesBasedOnTarget(target=null) {
+			if (!this.syncedPropertiesData) {
+				return;
+			}
       this.syncedPropertiesData.forEach((opts, el) => {
         if (target && target !== el) {
           return;
@@ -68,6 +73,6 @@ export const modelSync = (baseClass) => {
 
 	};
 
-  adviceAfter(afterSetStateAdvice(), '_setState')(ModelSync);
+  adviceAfter(afterSetStateAdvice(), 'setState')(ModelSync);
   return ModelSync;
 };

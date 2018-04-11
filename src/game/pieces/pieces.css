@@ -1,0 +1,16 @@
+p-sword, p-spear, p-shield {
+  height: 70px;
+  width: 70px;
+  display:block;
+  border:1px solid #FFF;
+}
+
+p-sword:focus, p-spear:focus, p-shield:focus {
+  border-color:blue;
+}
+
+p-sword a, p-spear a, p-shield a {
+  display: block;
+    height: 100%;
+    width: 100%;
+  }

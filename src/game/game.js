@@ -1,17 +1,17 @@
-import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent, state} from 'web-components-core';
+import {stopEvent, state} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import {Board} from './board/board';
 import {StatusBoard} from './status-board/status-board';
-import {Player} from './player';
-import {appModel} from './common/app-model';
+import {SideLine} from './side-line/side-line';
+import {Player} from '../player';
+import {appModel} from 'common/app-model';
+import {BaseView} from 'common/views/base-view';
+
 
 const NUM_POINTS_TO_WIN = 9;
 
-export class Game extends classBuilder(customElement()).with(
-	events,
-	properties,
-  state) {
+export class Game extends classBuilder(BaseView).with(
+	state) {
 
   constructor(numPlayers = 2) {
     super();
@@ -20,12 +20,8 @@ export class Game extends classBuilder(customElement()).with(
     this.initPlayers();
     this.board = new Board();
 		this.statusBoard = new StatusBoard();
+		this.sideLine = new SideLine();
     this.currentPlayerIndex = 0;
-    this.html = hyper(this);
-		this.setState({test:1});
-		setInterval(() => {
-			this.setState({test:Math.random()});
-		},5000)
 		this.listenForEvents();
   }
 
@@ -62,11 +58,8 @@ export class Game extends classBuilder(customElement()).with(
     return this.html`
 				${this.statusBoard}
         ${this.board}
+				${this.sideLine}
       `;
-  }
-
-	componentDidUpdate(previousState) {
-		debugger;
   }
 
 }

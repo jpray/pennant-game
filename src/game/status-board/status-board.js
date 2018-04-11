@@ -1,19 +1,14 @@
-import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent} from 'web-components-core';
+import {stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
 import './status-board.css';
 import delegate from 'dom-delegate';
-//import {getCurrentPlayer} from '../common/providers/current-player';
-import {appModel} from '../common/app-model';
+//import {getCurrentPlayer} from 'common/providers/current-player';
+import {appModel} from 'common/app-model';
+import {BaseView} from 'common/views/base-view';
 
-export class StatusBoard extends classBuilder(customElement()).with(
-	events,
-	properties) {
+export class StatusBoard extends BaseView {
   constructor() {
     super();
-    this.html = hyper(this);
-		this.delegateEl = delegate(this);
-		this.addEventListeners();
 
     // this.currentPlayer = appModel.getValue(appModel.accessors.CURRENT_PLAYER);
     // appModel.watch(appModel.accessors.CURRENT_PLAYER, 'currentPlayer', this);
@@ -26,8 +21,6 @@ export class StatusBoard extends classBuilder(customElement()).with(
 
     appModel.syncProperties(this,
 			['currentPlayer', appModel.accessors.CURRENT_PLAYER]);
-			debugger;
-    appModel.set(appModel.accessors.CURRENT_PLAYER, 1);
 
   }
 
@@ -46,10 +39,7 @@ export class StatusBoard extends classBuilder(customElement()).with(
 				reflectToAttribute: false,
 				value() {
 					return 0;
-				},
-				observer(value) {
-          debugger;
-        }
+				}
 			}
 		};
 	}

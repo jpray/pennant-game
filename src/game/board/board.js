@@ -3,27 +3,22 @@ import {customElement, events, properties, stopEvent} from 'web-components-core'
 import {classBuilder} from 'utility-toolkit';
 import {Cell} from './cell';
 import './board.css';
-import delegate from 'dom-delegate';
+import {BaseView} from 'common/views/base-view';
 
-export class Board extends classBuilder(customElement()).with(
-	events,
-	properties) {
+export class Board extends BaseView {
   constructor() {
     super();
-    this.html = hyper(this);
-    this.grid = Array.apply(null, Array(5)).map(() => {
-      return Array.apply(null, Array(5)).map(() => {
+    this.state = Array.apply(null, Array(5)).map((ignore, rowIndex) => {
+      return Array.apply(null, Array(5)).map((ignore, colIndex) => {
         return null;
       })
     })
-		this.delegateEl = delegate(this);
-		this.addEventListeners();
   }
   render() {
     return this.html`
-      ${this.grid.map(row => hyper.wire(row)`<div class="b-row">
-        ${row.map(cell => hyper.wire(cell)`
-          <p-cell piece=></p-cell>
+      ${this.state.map((row, x) => hyper.wire(row)`<div class="b-row">
+        ${row.map((cell, y) => hyper.wire(cell)`
+          <p-cell x="${x}" y="${y}"></p-cell>
           `)}
       </div>`)}
       `;

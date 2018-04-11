@@ -1,21 +1,34 @@
 /* @flow */
 import './pennant-game.css'; // eslint-disable-line import/no-unassigned-import, import/extensions
-
-import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent} from 'web-components-core';
+import {stopEvent} from 'web-components-core';
 import {classBuilder} from 'utility-toolkit';
-import {Game} from './game';
+import {Game} from 'game/game';
+import delegate from 'dom-delegate';
+import {tempState} from 'common/temp-state';
+import {BaseView} from 'common/views/base-view';
 
 const NUM_PLAYERS = 2;
 
-export class PennantGame extends classBuilder(customElement()).with(
-	events,
-	properties) {
+export class PennantGame extends BaseView {
     constructor() {
       super();
       this.game = new Game(NUM_PLAYERS);
-			this.html = hyper(this);
     }
+
+		addEventListners() {
+			delegate(document.body).on('click', 'a', function(e) {
+	      let href = this.getAttribute('href');
+	      if (href === '#') {
+	        e.preventDefault();
+	        return;
+	      }
+	    });
+
+			delegate(this).on('dragstart', '.piece', function(e) {
+	      tempState.currentElementBeingDragged = e.target;
+	    });
+
+		}
 
     connected() {
 			this.render();

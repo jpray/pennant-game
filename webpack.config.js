@@ -27,6 +27,12 @@ module.exports = {
   devServer: {
     inline: true
   },
+  resolve: {
+    modules: [
+      path.resolve('./src'),
+      path.resolve('./node_modules')
+    ]
+  },
   module: {
   rules: [
     {
