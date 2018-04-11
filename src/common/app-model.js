@@ -1,6 +1,6 @@
 import {classBuilder} from 'utility-toolkit';
-import {model} from './model.mixin';
-import {modelSync} from './model-sync.mixin';
+import {model} from './mixins/model.mixin';
+import {modelSync} from './mixins/model-sync.mixin';
 import {sideLineDefaultState} from './tasks/side-line-default-state';
 import {piecesDefaultState} from './tasks/pieces-default-state';
 class AppModel extends classBuilder(class{}).with(model, modelSync) {
