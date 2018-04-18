@@ -4,7 +4,7 @@ import delve from 'dlv';
 
 function delveSplit(accessor) {
   let lastDotPos = accessor.lastIndexOf('.');
-  if (lastDotPos) {
+  if (lastDotPos > -1) {
     let propName = accessor.slice(lastDotPos+1);
     let path = accessor.slice(0,lastDotPos);
     return {
@@ -52,7 +52,7 @@ export const model = (baseClass) => {
     set(accessor, value) {
       let newState = this.getState();
       let {propName, path} = delveSplit(accessor);
-      let obj = delve(newState, path);
+      let obj = delve(newState, path) || newState;
       obj[propName] = value;
       this.setState(newState, accessor);
     }

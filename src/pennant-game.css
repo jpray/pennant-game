@@ -3,3 +3,11 @@ pennant-game {
   min-height:200px;
   min-width:200px;
 }
+
+.hide {
+  display:none;
+}
+
+.show {
+  display:block;
+}

@@ -1,19 +1,13 @@
-import {BaseView} from 'common/views/base-view';
-import './pieces.css';
-import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
+import {Piece} from './piece';
 
-export class Sword extends BaseView {
+export class Sword extends Piece {
 
   construct() {
     super.construct();
-    this.id = 'sword1';
+    this.id = '0_sword_0';
     this.setAttribute('draggable', true);
     this.classList.add('piece');
 
-  }
-
-  get currentCell() {
-    return getCurrentCellForPiece(this);
   }
 
   render() {

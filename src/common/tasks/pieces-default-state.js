@@ -12,8 +12,7 @@ export function piecesDefaultState() {
           playerId: playerId,
           pieceId: `${playerId}_${type}_${num}`,
           location: 'sideline',
-          x: null,
-          y: null
+          cellId: null
         }
       }));
     },[]));

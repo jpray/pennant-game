@@ -1,10 +1,10 @@
-import {BaseView} from 'common/views/base-view';
-import './pieces.css';
+import {Piece} from './piece';
 
-export class Spear extends BaseView {
+export class Spear extends Piece {
 
   construct() {
     super.construct();
+    this.id = '0_spear_0';
     this.setAttribute('draggable', true);
     this.classList.add('piece');
 

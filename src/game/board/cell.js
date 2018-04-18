@@ -5,46 +5,62 @@ import delegate from 'dom-delegate';
 import {movePiece} from 'common/tasks/move-piece';
 import {tempState} from 'common/temp-state';
 import {BaseView} from 'common/views/base-view';
+import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
 
-export class Cell extends BaseView {
+//export class Cell extends BaseView {
+export class Cell extends classBuilder(customElement()).with(
+	events,
+	properties) {
+
   construct() {
+    this.html = hyper(this);
     super.construct();
-		this.id = '1';
+		this.cellId = null;
+    this.delegateEl = delegate(this);
+    this.addEventListeners();
   }
 
 	static get properties() {
 		return {
-			x: {
-				type: Number,
+			cellId: {
+				type: String,
 				value() {
-					return NaN;
+					return '';
 				}
 			},
-      y: {
-				type: Number,
+			pieceId: {
+				type: String,
 				value() {
-					return NaN;
+					return '';
 				}
 			}
 		};
 	}
 
 	addEventListeners() {
-    this.addEventListener('dragover', function(e) {
-			e.preventDefault();
-		})
-		this.addEventListener('drop', this.handleDrop.bind(this));
+    // this.addEventListener('dragover', function(e) {
+		// 	e.preventDefault();
+		// })
+		// this.addEventListener('drop', this.handleDrop.bind(this));
+		this.addEventListener('click', this.handleDrop.bind(this));
 	}
 
 	handleDrop(e) {
-		debugger;
+    debugger;
 		let piece = tempState.currentElementBeingDragged;
 		movePiece(piece, this);
 	}
 
   render() {
+		if (this.pieceId) {
+			debugger;
+		}
+		let pieceState = getPieceStateById(this.pieceId);
+		let type = pieceState && pieceState.type;
     return this.html`
-      ${this.currentPiece}
+		 <p-sword class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
+		 <p-spear class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
+		 <p-shield class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
     `;
   }
 }

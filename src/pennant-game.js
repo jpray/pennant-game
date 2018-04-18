@@ -24,7 +24,8 @@ export class PennantGame extends BaseView {
 	      }
 	    });
 
-			delegate(this).on('dragstart', '.piece', function(e) {
+			this.delegateEl.on('dragstart', '.piece', function(e) {
+        debugger;
 	      tempState.currentElementBeingDragged = e.target;
 	    });
 

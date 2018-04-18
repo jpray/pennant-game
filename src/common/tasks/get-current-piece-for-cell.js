@@ -1,7 +1,7 @@
 import {appModel} from '../app-model';
 
-export function getPieceAtPosition(cellId) {
-  let pieceData = appModel.pieces.reduce((out, data) => {
+export function getCurrentPieceForCell(cellId) {
+  let pieceData = appModel.get('pieces').reduce((out, data) => {
     if (out) {
       return out;
     }
@@ -10,4 +10,5 @@ export function getPieceAtPosition(cellId) {
     }
     return null;
   },null)
+  return pieceData;
 }

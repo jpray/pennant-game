@@ -2,7 +2,15 @@ import {appModel} from '../app-model';
 import {Move} from '../actions/move.action';
 
 function performMoveAction(action) {
-//requires that appModel actually contain and be used for board/cell info
+  //requires that appModel actually contain and be used for board/cell info
+  let newActions = appModel.get('actions').concat([action]);
+  appModel.set('actions', newActions);
+
+  //
+
+  //let piece = getPiece(action.pieceId);
+  appModel.setPiece(action.pieceId, action.endingCellId);
+  //piece.currentCellId = action.endingCellId;
 }
 
 export function movePiece(piece, cell) {
@@ -10,8 +18,8 @@ export function movePiece(piece, cell) {
   action.playerId = appModel.get(appModel.accessors.CURRENT_PLAYER);
   action.boardId = 'default';
   action.pieceId = piece.id;
-  action.startingCellId = piece.currentCell.id;
-  action.endingCellId = cell.id;
+  action.startingCellId = piece.currentCell.cellId;
+  action.endingCellId = cell.cellId;
   //validateAction(action);
   performMoveAction(action);
 }
