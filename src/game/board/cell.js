@@ -33,6 +33,18 @@ export class Cell extends classBuilder(customElement()).with(
 				value() {
 					return '';
 				}
+			},
+			winningCell: {
+				type: String,
+				value() {
+					return '';
+				}
+			},
+			startingCellForPlayer: {
+				type: String,
+				value() {
+					return '';
+				}
 			}
 		};
 	}
@@ -52,6 +64,16 @@ export class Cell extends classBuilder(customElement()).with(
 	}
 
   render() {
+		if (this.startingCellForPlayer === '1') {
+			this.classList.add('starting-cell');
+			this.classList.add('starting-cell--player-one');
+		} else if (this.startingCellForPlayer === '2') {
+			this.classList.add('starting-cell');
+			this.classList.add('starting-cell--player-two');
+		} else if (this.winningCell) {
+			this.classList.add('winning-cell');
+		}
+
 		if (this.pieceId) {
 			debugger;
 		}

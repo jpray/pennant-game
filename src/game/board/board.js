@@ -27,9 +27,21 @@ export class Board extends BaseView {
           if (pieceData.pieceId) {
             debugger;
           }
-          let isWinningCell = x === 3 && y === 3;
+          let isWinningCell = x === 2 && y === 2 ? 'true' : '';
+          let startingCellForPlayer = '';
+          if ((x === 0 && y === 0) || (x === 1 && y === 0) || (x === 0 && y === 1)) {
+            startingCellForPlayer = '1';
+          }
+          if ((x === 4 && y === 4) || (x === 4 && y === 3) || (x === 3 && y === 4)) {
+            startingCellForPlayer = '2';
+          }
           return hyper.wire(cell)`
-          <p-cell cell-id="${cellId}" piece-id="${pieceData.pieceId}"></p-cell>
+          <p-cell
+            cell-id="${cellId}"
+            piece-id="${pieceData.pieceId}"
+            winning-cell="${isWinningCell}"
+            starting-cell-for-player="${startingCellForPlayer}"
+          ></p-cell>
           `})}
       </div>`)}
       `;

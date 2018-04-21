@@ -20,7 +20,8 @@ export class Game extends classBuilder(BaseView).with(
     this.initPlayers();
     this.board = new Board();
 		this.statusBoard = new StatusBoard();
-		this.sideLine = new SideLine();
+		this.sideLine1 = new SideLine();
+		this.sideLine2 = new SideLine();
     this.currentPlayerIndex = 0;
 		this.listenForEvents();
   }
@@ -57,8 +58,9 @@ export class Game extends classBuilder(BaseView).with(
   render() {
     return this.html`
 				${this.statusBoard}
+				${this.sideLine1}
         ${this.board}
-				${this.sideLine}
+				${this.sideLine2}
       `;
   }
 
