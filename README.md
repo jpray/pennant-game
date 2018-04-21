@@ -1,6 +1,7 @@
 ## Pennant
 
-Creator: Paulo
+Creator: Paulo Brandon
+
 Programmer: Dan Pray
 
 Current Status: Super rough draft.... really really rough
