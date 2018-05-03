@@ -4,53 +4,72 @@ import {classBuilder} from 'utility-toolkit';
 import './side-line.css';
 import delegate from 'dom-delegate';
 import {appModel} from 'common/app-model';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 
-export class SideLine extends BaseView {
+export class SideLine extends baseView() {
+// export class SideLine extends classBuilder(customElement()).with(
+// 	events,
+// 	properties) {
+    constructor() {
+      super();
+      this.html = hyper(this);
+    }
+
+
   construct() {
     super.construct();
-    appModel.syncProperties(this, ['swords', appModel.accessors.SIDELINE_SWORDS]);
-    appModel.syncProperties(this, ['spears', appModel.accessors.SIDELINE_SPEARS]);
-    appModel.syncProperties(this, ['shields', appModel.accessors.SIDELINE_SHIELDS]);
+  }
+
+  connected() {
+    appModel.syncProperties(this, ['numSidelinePieces', appModel.accessors['SIDELINE_PLAYER'+this.playerId]]);
+    appModel.syncProperties(this, ['currentPlayer', appModel.accessors.CURRENT_PLAYER]);
+  }
+
+  propertiesChanged() {
+    this.render();
+  }
+
+  get disabled() {
+    return this.currentPlayer !== this.playerId;
   }
 
   static get properties() {
+    debugger;
 		return {
-			swords: {
-				type: Array,
+			numSidelinePieces: {
+				type: Number,
 				value() {
-					return [];
+					return 0;
 				}
 			},
-      spears: {
-				type: Array,
+      playerId: {
+				type: Number,
 				value() {
-					return [];
+					return 999;
 				}
 			},
-      shields: {
-				type: Array,
-				value() {
-					return [];
-				}
-			}
+      currentPlayer: {
+        type: Number,
+        value() {
+          return 999;
+        }
+      }
 		};
 	}
 
   render() {
+    this.classList[this.disabled ? 'add' : 'remove']('sideline--disabled');
     return this.html`
-      <div class="sideline_cell">
-        ${this.swords[0]}
-        ${this.swords.length}
-      </div>
-      <div class="sideline_cell">
-        ${this.spears[0]}
-        ${this.spears.length}
-      </div>
-      <div class="sideline_cell">
-        ${this.shields[0]}
-        ${this.shields.length}
-      </div>
+       <div>Number of Available Pieces: ${this.numSidelinePieces}</div>
+       <div class="sideline_cell">
+        <p-sword></p-sword>
+       </div>
+       <div class="sideline_cell">
+        <p-spear></p-spear>
+       </div>
+       <div class="sideline_cell">
+        <p-shield></p-shield>
+       </div>
     `;
   }
 

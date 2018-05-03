@@ -4,24 +4,25 @@ import {classBuilder} from 'utility-toolkit';
 import {defineElement, customElement, events, properties} from 'web-components-core';
 import delegate from 'dom-delegate';
 
-export class BaseView extends classBuilder(customElement()).with(
-	events,
-	properties) {
-    constructor() {
-      super();
-      this.html = hyper(this);
-			this.delegateEl = delegate(this);
-			this.addEventListeners();
-    }
+export function baseView() {
+	return class extends classBuilder(customElement()).with(
+		events,
+		properties) {
+	    constructor() {
+	      super();
+	      this.html = hyper(this);
+				this.delegateEl = delegate(this);
+				this.addEventListeners();
+	    }
 
-		static get properties() {
-			return {};
-		}
+			static get properties() {
+				return {};
+			}
 
-    render() {
-      return this.html`test`;
-    }
+	    render() {
+	      return this.html``;
+	    }
 
-		addEventListeners() {}
-
+			addEventListeners() {}
+	}
 }

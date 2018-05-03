@@ -4,13 +4,13 @@ import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
 import {movePiece} from 'common/tasks/move-piece';
 import {tempState} from 'common/temp-state';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
 
-//export class Cell extends BaseView {
-export class Cell extends classBuilder(customElement()).with(
-	events,
-	properties) {
+export class Cell extends baseView() {
+// export class Cell extends classBuilder(customElement()).with(
+// 	events,
+// 	properties) {
 
   construct() {
     this.html = hyper(this);
@@ -73,6 +73,8 @@ export class Cell extends classBuilder(customElement()).with(
 		} else if (this.winningCell) {
 			this.classList.add('winning-cell');
 		}
+
+		//if (appModel.get('game.selectedPiece'))
 
 		if (this.pieceId) {
 			debugger;

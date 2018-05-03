@@ -4,9 +4,9 @@ import './status-board.css';
 import delegate from 'dom-delegate';
 //import {getCurrentPlayer} from 'common/providers/current-player';
 import {appModel} from 'common/app-model';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 
-export class StatusBoard extends BaseView {
+export class StatusBoard extends baseView() {
   constructor() {
     super();
 
@@ -32,7 +32,12 @@ export class StatusBoard extends BaseView {
     appModel.pauseSync(this);
   }
 
+  propertiesChanged() {
+    debugger;
+  }
+
   static get properties() {
+    debugger;
 		return {
 			currentPlayer: {
 				type: Number,
@@ -46,7 +51,7 @@ export class StatusBoard extends BaseView {
 
   render() {
     return this.html`
-      Player ${this.currentPlayer+1}'s Turn.
+      Player ${this.currentPlayer}'s Turn.
     `;
   }
 	addEventListeners() {

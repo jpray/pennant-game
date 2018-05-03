@@ -3,11 +3,11 @@ import {customElement, events, properties, stopEvent} from 'web-components-core'
 import {classBuilder} from 'utility-toolkit';
 import {Cell} from './cell';
 import './board.css';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 import {getCurrentPieceForCell} from 'common/tasks/get-current-piece-for-cell';
 import {appModel} from 'common/app-model';
 
-export class Board extends BaseView {
+export class Board extends baseView() {
   constructor() {
     super();
     this.state = Array.apply(null, Array(5)).map((ignore, rowIndex) => {
@@ -24,9 +24,6 @@ export class Board extends BaseView {
         ${row.map((cell, y) => {
           let cellId = ''+x+y;
           let pieceData = getCurrentPieceForCell(cellId) || {};
-          if (pieceData.pieceId) {
-            debugger;
-          }
           let isWinningCell = x === 2 && y === 2 ? 'true' : '';
           let startingCellForPlayer = '';
           if ((x === 0 && y === 0) || (x === 1 && y === 0) || (x === 0 && y === 1)) {

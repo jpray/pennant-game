@@ -2,3 +2,8 @@ side-line {
   display: flex;
   justify-content: center;
 }
+
+.sideline--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

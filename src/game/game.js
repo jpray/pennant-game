@@ -5,12 +5,12 @@ import {StatusBoard} from './status-board/status-board';
 import {SideLine} from './side-line/side-line';
 import {Player} from '../player';
 import {appModel} from 'common/app-model';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 
 
 const NUM_POINTS_TO_WIN = 9;
 
-export class Game extends classBuilder(BaseView).with(
+export class Game extends classBuilder(baseView()).with(
 	state) {
 
   constructor(numPlayers = 2) {
@@ -20,8 +20,6 @@ export class Game extends classBuilder(BaseView).with(
     this.initPlayers();
     this.board = new Board();
 		this.statusBoard = new StatusBoard();
-		this.sideLine1 = new SideLine();
-		this.sideLine2 = new SideLine();
     this.currentPlayerIndex = 0;
 		this.listenForEvents();
   }
@@ -58,9 +56,9 @@ export class Game extends classBuilder(BaseView).with(
   render() {
     return this.html`
 				${this.statusBoard}
-				${this.sideLine1}
+				<side-line player-id="0"/>
         ${this.board}
-				${this.sideLine2}
+				<side-line player-id="1"/>
       `;
   }
 

@@ -55,6 +55,7 @@ export const modelSync = (baseClass) => {
         if (accessor.indexOf(opts.accessor) === -1) {
           return;
         }
+				debugger;
         el[opts.targetProperty] = this.get(opts.accessor);
       })
     }

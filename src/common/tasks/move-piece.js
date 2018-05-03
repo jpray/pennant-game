@@ -9,7 +9,8 @@ function performMoveAction(action) {
   //
 
   //let piece = getPiece(action.pieceId);
-  appModel.setPiece(action.pieceId, action.endingCellId);
+  appModel.setPiece(action);
+  appModel.endTurn();
   //piece.currentCellId = action.endingCellId;
 }
 

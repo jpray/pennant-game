@@ -5,11 +5,14 @@ import {classBuilder} from 'utility-toolkit';
 import {Game} from 'game/game';
 import delegate from 'dom-delegate';
 import {tempState} from 'common/temp-state';
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
+import 'game/pieces/shield.piece';
+import 'game/pieces/spear.piece';
+import 'game/pieces/sword.piece';
 
 const NUM_PLAYERS = 2;
 
-export class PennantGame extends BaseView {
+export class PennantGame extends baseView() {
     constructor() {
       super();
       this.game = new Game(NUM_PLAYERS);
@@ -25,7 +28,6 @@ export class PennantGame extends BaseView {
 	    });
 
 			this.delegateEl.on('dragstart', '.piece', function(e) {
-        debugger;
 	      tempState.currentElementBeingDragged = e.target;
 	    });
 

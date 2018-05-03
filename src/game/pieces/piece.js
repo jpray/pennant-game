@@ -1,9 +1,10 @@
-import {BaseView} from 'common/views/base-view';
+import {baseView} from 'common/views/base-view';
 import './pieces.css';
 import {tempState} from 'common/temp-state';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
+import {appModel} from 'common/app-model';
 
-export class Piece extends BaseView {
+export class Piece extends baseView() {
   constructor() {
     super();
   }
@@ -18,6 +19,10 @@ export class Piece extends BaseView {
 
   handleClick(e) {
     e.preventDefault();
+    let pieceId = e.currentTarget.pieceId || e.currentTarget.id;
+    if (pieceId) {
+      appModel.set('selectedPiece', pieceId);
+    }
     tempState.currentElementBeingDragged = e.currentTarget;
   }
 
