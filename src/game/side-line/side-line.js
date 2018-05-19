@@ -31,7 +31,7 @@ export class SideLine extends baseView() {
 
   }
 
-  propertiesChanged() {
+  propertiesChanged(val1, val2, c) {
     this.render();
   }
 

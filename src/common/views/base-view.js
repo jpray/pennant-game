@@ -12,7 +12,6 @@ export function baseView() {
 	      super();
 	      this.html = hyper(this);
 				this.delegateEl = delegate(this);
-				this.addEventListeners();
 	    }
 
 			static get properties() {
@@ -23,6 +22,5 @@ export function baseView() {
 	      return this.html``;
 	    }
 
-			addEventListeners() {}
 	}
 }

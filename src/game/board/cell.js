@@ -8,15 +8,15 @@ import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
 
 export class Cell extends baseView() {
-// export class Cell extends classBuilder(customElement()).with(
-// 	events,
-// 	properties) {
 
   construct() {
     this.html = hyper(this);
     super.construct();
-		this.cellId = null;
+		this.cellId = '';
     this.delegateEl = delegate(this);
+  }
+
+  connected() {
     this.addEventListeners();
   }
 
@@ -54,11 +54,20 @@ export class Cell extends baseView() {
 		// 	e.preventDefault();
 		// })
 		// this.addEventListener('drop', this.handleDrop.bind(this));
+    if (this.cellId === '00') {
+      //window.jdp = this;
+      //debugger;
+    }
 		this.addEventListener('click', this.handleDrop.bind(this));
 	}
 
 	handleDrop(e) {
-    
+    if (!tempState.currentElementBeingDragged) {
+      return;
+    }
+    console.log(e.target);
+    console.log(e.currentTarget);
+
 		let piece = tempState.currentElementBeingDragged;
 		movePiece(piece, this);
 	}
@@ -77,7 +86,7 @@ export class Cell extends baseView() {
 		//if (appModel.get('game.selectedPiece'))
 
 		if (this.pieceId) {
-			
+
 		}
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;
