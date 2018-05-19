@@ -1,8 +1,8 @@
-import {uniqueString, objectAssign, objectDeepFreeze, adviceAfter} from 'utility-toolkit';
+import {objectAssign, objectDeepFreeze, dget} from 'utility-toolkit';
 //import {global, objectAssign, adviceBefore, functionName, createStorage, microTask} from 'utility-toolkit';
-import delve from 'dlv';
+import uniqueId from 'utility-toolkit/lib/unique-id.js';
 
-function delveSplit(accessor) {
+function dgetSplit(accessor) {
   let lastDotPos = accessor.lastIndexOf('.');
   if (lastDotPos > -1) {
     let propName = accessor.slice(lastDotPos+1);
@@ -29,7 +29,7 @@ function jsonClone(value) {
 
 export const model = (baseClass) => {
 
-  const stateKey = uniqueString.get('_state');
+  const stateKey = uniqueId('_state');
 
   return class Model {
     constructor() {
@@ -51,19 +51,33 @@ export const model = (baseClass) => {
 
     set(accessor, value) {
       let newState = this.getState();
-      let {propName, path} = delveSplit(accessor);
-      let obj = delve(newState, path) || newState;
-      obj[propName] = value;
+      let {propName, path} = dgetSplit(accessor);
+      let obj = dget(newState, path) || newState;
+      if (Array.isArray(obj)) {
+        obj[Number(propName)] = value;
+      } else {
+        obj[propName] = value;
+      }
       this.setState(newState, accessor);
     }
 
     getState(accessor='') {
-      return jsonClone(accessor ? delve(this[stateKey], accessor) : this[stateKey]);
+      return jsonClone(accessor ? dget(this[stateKey], accessor) : this[stateKey]);
     }
 
     setState(newState, accessor) {
       const currentState = this.getState();
       this[stateKey] = newState;
+    }
+
+    on(name, func) {
+      this.listeners.push(func);
+    }
+
+    notifyListeners() {
+      this.listeners.forEach((cb) => {
+        cb('change', );
+      })
     }
 
   }

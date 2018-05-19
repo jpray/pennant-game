@@ -1,5 +1,5 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import './side-line.css';
 import delegate from 'dom-delegate';
@@ -13,6 +13,7 @@ export class SideLine extends baseView() {
     constructor() {
       super();
       this.html = hyper(this);
+      this.appModel = appModel;
     }
 
 
@@ -34,7 +35,6 @@ export class SideLine extends baseView() {
   }
 
   static get properties() {
-    debugger;
 		return {
 			numSidelinePieces: {
 				type: Number,

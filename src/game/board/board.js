@@ -1,5 +1,5 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import {Cell} from './cell';
 import './board.css';
@@ -15,7 +15,7 @@ export class Board extends baseView() {
         return null;
       })
     })
-    appModel.on('update', this.render.bind(this));
+    //appModel.on('update', this.render.bind(this));
   }
 
   render() {

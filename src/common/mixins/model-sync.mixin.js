@@ -1,5 +1,5 @@
 /* @flow */
-import {adviceAfter, uniqueString} from 'utility-toolkit';
+import {after} from 'utility-toolkit';
 
 /**
  * Mixin adds CustomEvent handling to an element
@@ -20,7 +20,14 @@ export const modelSync = (baseClass) => {
       this.syncedPropertiesDataPaused = new WeakMap();
 		}
 
+		construct() {
+			this.on('change',() => {
+				debugger;
+			})
+		}
+
     syncProperties(target, ...propsArray) {
+
       propsArray.forEach((propData) => {
         let targetProperty = propData[0];
         let accessor = propData[1];
@@ -55,7 +62,7 @@ export const modelSync = (baseClass) => {
         if (accessor.indexOf(opts.accessor) === -1) {
           return;
         }
-				debugger;
+
         el[opts.targetProperty] = this.get(opts.accessor);
       })
     }
@@ -74,6 +81,6 @@ export const modelSync = (baseClass) => {
 
 	};
 
-  adviceAfter(afterSetStateAdvice(), 'setState')(ModelSync);
+  after(afterSetStateAdvice(), 'setState')(ModelSync);
   return ModelSync;
 };

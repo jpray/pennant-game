@@ -1,7 +1,7 @@
 
 import {default as hyper} from 'hyperhtml/esm/index';
 import {classBuilder} from 'utility-toolkit';
-import {defineElement, customElement, events, properties} from 'web-components-core';
+import {defineElement, customElement, events, properties} from 'utility-toolkit';
 import delegate from 'dom-delegate';
 
 export function baseView() {

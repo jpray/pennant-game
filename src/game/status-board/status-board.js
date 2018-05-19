@@ -1,4 +1,4 @@
-import {stopEvent} from 'web-components-core';
+import {stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import './status-board.css';
 import delegate from 'dom-delegate';
@@ -33,11 +33,11 @@ export class StatusBoard extends baseView() {
   }
 
   propertiesChanged() {
-    debugger;
+    
   }
 
   static get properties() {
-    debugger;
+    
 		return {
 			currentPlayer: {
 				type: Number,
@@ -56,7 +56,7 @@ export class StatusBoard extends baseView() {
   }
 	addEventListeners() {
 		this.delegateEl.on('click', 'p-cell', (e) => {
-			debugger;
+			
 		})
 	}
 }

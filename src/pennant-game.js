@@ -1,6 +1,6 @@
 /* @flow */
 import './pennant-game.css'; // eslint-disable-line import/no-unassigned-import, import/extensions
-import {stopEvent} from 'web-components-core';
+import {stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import {Game} from 'game/game';
 import delegate from 'dom-delegate';

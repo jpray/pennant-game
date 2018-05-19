@@ -1,5 +1,5 @@
 import {default as hyper} from 'hyperhtml/esm/index';
-import {customElement, events, properties, stopEvent} from 'web-components-core';
+import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
 import {movePiece} from 'common/tasks/move-piece';
@@ -58,7 +58,7 @@ export class Cell extends baseView() {
 	}
 
 	handleDrop(e) {
-    debugger;
+    
 		let piece = tempState.currentElementBeingDragged;
 		movePiece(piece, this);
 	}
@@ -77,7 +77,7 @@ export class Cell extends baseView() {
 		//if (appModel.get('game.selectedPiece'))
 
 		if (this.pieceId) {
-			debugger;
+			
 		}
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;

@@ -1,4 +1,4 @@
-import {stopEvent, state} from 'web-components-core';
+import {stopEvent, state} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import {Board} from './board/board';
 import {StatusBoard} from './status-board/status-board';

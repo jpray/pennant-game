@@ -16,10 +16,10 @@ class AppModel extends classBuilder(class{}).with(model, modelSync) {
       SIDELINE_PLAYER1: 'sideline.1',
       PIECES: 'pieces',
       PIECE: (pieceId) => {
-        debugger;
+
       },
       PIECE_CELL: (pieceId) => {
-        debugger;
+
         this.get('pieces')
       }
     };
@@ -63,18 +63,7 @@ class AppModel extends classBuilder(class{}).with(model, modelSync) {
   }
 
   decrementSideline(action) {
-    debugger;
     this.set(this.accessors['SIDELINE_PLAYER'+action.playerId], this.get(this.accessors['SIDELINE_PLAYER'+action.playerId])-1);
-  }
-
-  on(name, func) {
-    this.listeners.push(func);
-  }
-
-  notifyListeners() {
-    this.listeners.forEach((cb) => {
-      cb();
-    })
   }
 
 

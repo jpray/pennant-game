@@ -1,6 +1,6 @@
 const path = require('path');
 
-function excludeNodeModulesExcept (modules)
+function excludeNodeModulesExcept(modules)
 {
     var pathSep = path.sep;
     if (pathSep == '\\') // must be quoted for use in a regexp:
@@ -37,7 +37,7 @@ module.exports = {
   rules: [
     {
       test: /\.js$/,
-      exclude: excludeNodeModulesExcept(["web-components-core", "utility-toolkit"]),
+      exclude: excludeNodeModulesExcept(["utility-toolkit"]),
       use: {
         loader: 'babel-loader',
         options: {
