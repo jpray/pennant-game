@@ -7,3 +7,11 @@ export function getPieceStateById(pieceId) {
   });
   return filteredArray[0];
 }
+
+export function setPieceStateById(pieceId, value) {
+  appModel.get('pieces').forEach((piece, index) => {
+    if (piece.pieceId === pieceId) {
+      appModel.set(`pieces.${index}`, value)
+    }
+  })
+}

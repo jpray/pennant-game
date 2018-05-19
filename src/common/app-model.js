@@ -1,9 +1,8 @@
-import {classBuilder} from 'utility-toolkit';
-import {model} from './mixins/model.mixin';
-import {modelSync} from './mixins/model-sync.mixin';
+import {classBuilder, model} from 'utility-toolkit';
 import {piecesDefaultState} from './tasks/pieces-default-state';
-import {getPieceStateById} from './tasks/get-piece-state-by-id';
-class AppModel extends classBuilder(class{}).with(model, modelSync) {
+import {getPieceStateById, setPieceStateById} from './tasks/get-piece-state-by-id';
+
+class AppModel extends classBuilder(class{}).with(model) {
 
   constructor() {
     super();
@@ -14,14 +13,7 @@ class AppModel extends classBuilder(class{}).with(model, modelSync) {
       GAME: 'game',
       SIDELINE_PLAYER0: 'sideline.0',
       SIDELINE_PLAYER1: 'sideline.1',
-      PIECES: 'pieces',
-      PIECE: (pieceId) => {
-
-      },
-      PIECE_CELL: (pieceId) => {
-
-        this.get('pieces')
-      }
+      PIECES: 'pieces'
     };
   }
 
@@ -51,7 +43,7 @@ class AppModel extends classBuilder(class{}).with(model, modelSync) {
     }
 
     pieceState.cellId = action.endingCellId;
-    this.notifyListeners();
+    setPieceStateById(action.pieceId, pieceState);
   }
 
   endTurn() {

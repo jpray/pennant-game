@@ -18,7 +18,7 @@ export class PennantGame extends baseView() {
       this.game = new Game(NUM_PLAYERS);
     }
 
-		addEventListners() {
+		addEventListeners() {
 			delegate(document.body).on('click', 'a', function(e) {
 	      let href = this.getAttribute('href');
 	      if (href === '#') {
@@ -35,6 +35,7 @@ export class PennantGame extends baseView() {
 
     connected() {
 			this.render();
+      //this.addEventListeners();
 			//this.play();
     }
 

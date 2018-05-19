@@ -1,8 +1,8 @@
-import {stopEvent, state} from 'utility-toolkit';
+import {state} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import {Board} from './board/board';
 import {StatusBoard} from './status-board/status-board';
-import {SideLine} from './side-line/side-line';
+import './side-line/side-line';
 import {Player} from '../player';
 import {appModel} from 'common/app-model';
 import {baseView} from 'common/views/base-view';

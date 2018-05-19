@@ -10,34 +10,26 @@ export class StatusBoard extends baseView() {
   constructor() {
     super();
 
-    // this.currentPlayer = appModel.getValue(appModel.accessors.CURRENT_PLAYER);
-    // appModel.watch(appModel.accessors.CURRENT_PLAYER, 'currentPlayer', this);
-    // appModel.set(appModel.accessors.CURRENT_PLAYER, 1);
-    // appModel.syncProperty({
-    //   target: this,
-    //   targetProperty: 'currentPlayer',
-    //   accessor: appModel.accessors.CURRENT_PLAYER,
-    // })
-
-    appModel.syncProperties(this,
-			['currentPlayer', appModel.accessors.CURRENT_PLAYER]);
+    const appModelPropBinder = appModel
+      .createPropertyBinder(this)
+      .addBindings([
+      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer']
+    ]);
 
   }
 
   connected() {
-    appModel.unpauseSync(this);
   }
 
   disconnected() {
-    appModel.pauseSync(this);
   }
 
   propertiesChanged() {
-    
+
   }
 
   static get properties() {
-    
+
 		return {
 			currentPlayer: {
 				type: Number,
@@ -56,7 +48,7 @@ export class StatusBoard extends baseView() {
   }
 	addEventListeners() {
 		this.delegateEl.on('click', 'p-cell', (e) => {
-			
+
 		})
 	}
 }

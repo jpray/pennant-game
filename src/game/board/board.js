@@ -15,7 +15,7 @@ export class Board extends baseView() {
         return null;
       })
     })
-    //appModel.on('update', this.render.bind(this));
+    appModel.createSubscriber().on('*', this.render.bind(this));
   }
 
   render() {

@@ -9,6 +9,10 @@ export class Piece extends baseView() {
     super();
   }
 
+  connected() {
+    this.addEventListeners();
+  }
+
   get currentCell() {
     return getCurrentCellForPiece(this);
   }

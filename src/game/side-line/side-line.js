@@ -22,8 +22,13 @@ export class SideLine extends baseView() {
   }
 
   connected() {
-    appModel.syncProperties(this, ['numSidelinePieces', appModel.accessors['SIDELINE_PLAYER'+this.playerId]]);
-    appModel.syncProperties(this, ['currentPlayer', appModel.accessors.CURRENT_PLAYER]);
+    const appModelPropBinder = appModel
+      .createPropertyBinder(this)
+      .addBindings([
+      [appModel.accessors['SIDELINE_PLAYER'+this.playerId], 'numSidelinePieces'],
+      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer']
+    ]);
+
   }
 
   propertiesChanged() {
