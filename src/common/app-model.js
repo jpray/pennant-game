@@ -21,7 +21,7 @@ class AppModel extends classBuilder(class{}).with(model) {
   get defaultState() {
     let state = {
       actions: [],
-      players: [],
+      players: [{points:0},{points:0}],
       pieces: piecesDefaultState(),
       board: [],
       sideline: [9,9],
@@ -47,7 +47,19 @@ class AppModel extends classBuilder(class{}).with(model) {
     setPieceStateById(action.pieceId, pieceState);
   }
 
+  assignPoints() {
+    let winningCell = document.querySelector('.winning-cell');
+    if (winningCell.pieceId) {
+      let player = Number(winningCell.pieceId[0]);
+      let points = this.get(`players.${player}.points`);
+      this.set(`players.${player}.points`,
+        points+1
+      );
+    }
+  }
+
   endTurn() {
+
     tempState.currentElementBeingDragged = null;
     if (this.get(this.accessors.CURRENT_PLAYER) === 0) {
       this.set(this.accessors.CURRENT_PLAYER,1);

@@ -13,7 +13,9 @@ export class StatusBoard extends baseView() {
     const appModelPropBinder = appModel
       .createPropertyBinder(this)
       .addBindings([
-      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer']
+      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer'],
+      ['players.0.points', 'player0Points'],
+      ['players.1.points', 'player1Points']
     ]);
 
   }
@@ -31,6 +33,20 @@ export class StatusBoard extends baseView() {
 				value() {
 					return 0;
 				}
+			},
+      player0Points: {
+				type: Number,
+				reflectToAttribute: false,
+				value() {
+					return 0;
+				}
+			},
+      player1Points: {
+				type: Number,
+				reflectToAttribute: false,
+				value() {
+					return 0;
+				}
 			}
 		};
 	}
@@ -38,6 +54,8 @@ export class StatusBoard extends baseView() {
   render() {
     return this.html`
       Player ${this.currentPlayer}'s Turn.
+      <div>Player 1's Points: ${this.player0Points}</div>
+      <div>Player 2's Points: ${this.player1Points}</div>
     `;
   }
 	addEventListeners() {

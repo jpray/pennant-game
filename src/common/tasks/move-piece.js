@@ -10,6 +10,7 @@ function performMoveAction(action) {
 
   //let piece = getPiece(action.pieceId);
   appModel.setPiece(action);
+  appModel.assignPoints();
   appModel.endTurn();
   //piece.currentCellId = action.endingCellId;
 }
