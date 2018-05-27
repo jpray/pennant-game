@@ -18,14 +18,8 @@ export class StatusBoard extends baseView() {
 
   }
 
-  connected() {
-  }
-
-  disconnected() {
-  }
-
   propertiesChanged() {
-
+    this.render();
   }
 
   static get properties() {

@@ -69,6 +69,9 @@ export class Cell extends baseView() {
     console.log(e.currentTarget);
 
 		let piece = tempState.currentElementBeingDragged;
+    if (piece.cellId === this.cellId) {
+      return;
+    }
 		movePiece(piece, this);
 	}
 
@@ -88,9 +91,9 @@ export class Cell extends baseView() {
     let playerId = pieceState && pieceState.playerId;
 
     return this.html`
-		 <p-sword player-id="${playerId}" id="${this.pieceId}" class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
-		 <p-spear player-id="${playerId}" id="${this.pieceId}" class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
-		 <p-shield player-id="${playerId}" id="${this.pieceId}" class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
+		 <p-sword cell-id="${this.cellId}" player-id="${playerId}" id="${this.pieceId}" class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
+		 <p-spear cell-id="${this.cellId}" player-id="${playerId}" id="${this.pieceId}" class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
+		 <p-shield cell-id="${this.cellId}" player-id="${playerId}" id="${this.pieceId}" class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
     `;
   }
 }

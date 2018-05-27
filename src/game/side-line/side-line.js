@@ -71,13 +71,13 @@ export class SideLine extends baseView() {
     return this.html`
        <div>Number of Available Pieces: ${this.numSidelinePieces}</div>
        <div class="sideline_cell">
-        <p-sword id="${nextSwordId}"></p-sword>
+        <p-sword cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSwordId}"></p-sword>
        </div>
        <div class="sideline_cell">
-        <p-spear id="${nextSpearId}"></p-spear>
+        <p-spear cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSpearId}"></p-spear>
        </div>
        <div class="sideline_cell">
-        <p-shield id="${nextShieldId}"></p-shield>
+        <p-shield cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextShieldId}"></p-shield>
        </div>
     `;
   }
