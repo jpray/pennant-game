@@ -41,9 +41,9 @@ export class Cell extends baseView() {
 				}
 			},
 			startingCellForPlayer: {
-				type: String,
+				type: Number,
 				value() {
-					return '';
+					return NaN;
 				}
 			}
 		};
@@ -72,14 +72,21 @@ export class Cell extends baseView() {
     if (piece.cellId === this.cellId) {
       return;
     }
+    if (piece.cellId.includes('sideline')) {
+      if (Number(this.startingCellForPlayer) !== piece.playerId) {
+        piece.shake();
+        return;
+      }
+    }
+
 		movePiece(piece, this);
 	}
 
   render() {
-		if (this.startingCellForPlayer === '1') {
+		if (this.startingCellForPlayer === 0) {
 			this.classList.add('starting-cell');
 			this.classList.add('starting-cell--player-one');
-		} else if (this.startingCellForPlayer === '2') {
+		} else if (this.startingCellForPlayer === 1) {
 			this.classList.add('starting-cell');
 			this.classList.add('starting-cell--player-two');
 		} else if (this.winningCell) {

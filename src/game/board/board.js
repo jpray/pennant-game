@@ -25,12 +25,12 @@ export class Board extends baseView() {
           let cellId = ''+x+y;
           let pieceData = getCurrentPieceForCell(cellId) || {};
           let isWinningCell = x === 2 && y === 2 ? 'true' : '';
-          let startingCellForPlayer = '';
+          let startingCellForPlayer = NaN;
           if ((x === 0 && y === 0) || (x === 1 && y === 0) || (x === 0 && y === 1)) {
-            startingCellForPlayer = '1';
+            startingCellForPlayer = 0;
           }
           if ((x === 4 && y === 4) || (x === 4 && y === 3) || (x === 3 && y === 4)) {
-            startingCellForPlayer = '2';
+            startingCellForPlayer = 1;
           }
           return hyper.wire(cell)`
           <p-cell
