@@ -83,17 +83,14 @@ export class Cell extends baseView() {
 			this.classList.add('winning-cell');
 		}
 
-		//if (appModel.get('game.selectedPiece'))
-
-		if (this.pieceId) {
-
-		}
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;
+    let playerId = pieceState && pieceState.playerId;
+
     return this.html`
-		 <p-sword id="${this.pieceId}" class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
-		 <p-spear id="${this.pieceId}" class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
-		 <p-shield id="${this.pieceId}" class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
+		 <p-sword player-id="${playerId}" id="${this.pieceId}" class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
+		 <p-spear player-id="${playerId}" id="${this.pieceId}" class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
+		 <p-shield player-id="${playerId}" id="${this.pieceId}" class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
     `;
   }
 }

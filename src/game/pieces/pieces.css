@@ -14,3 +14,11 @@ p-sword a, p-spear a, p-shield a {
     height: 100%;
     width: 100%;
   }
+
+.piece-for-player0 {
+  border:1px solid red;
+}
+
+.piece-for-player1 {
+  border:1px solid blue;
+}
