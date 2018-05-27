@@ -64,16 +64,20 @@ export class SideLine extends baseView() {
 
   render() {
     this.classList[this.disabled ? 'add' : 'remove']('sideline--disabled');
+    let nextSwordId = `${this.currentPlayer}_sword_${Math.abs(this.numSidelinePieces-9)}`
+    let nextSpearId = `${this.currentPlayer}_spear_${Math.abs(this.numSidelinePieces-9)}`
+    let nextShieldId = `${this.currentPlayer}_shield_${Math.abs(this.numSidelinePieces-9)}`
+
     return this.html`
        <div>Number of Available Pieces: ${this.numSidelinePieces}</div>
        <div class="sideline_cell">
-        <p-sword></p-sword>
+        <p-sword id="${nextSwordId}"></p-sword>
        </div>
        <div class="sideline_cell">
-        <p-spear></p-spear>
+        <p-spear id="${nextSpearId}"></p-spear>
        </div>
        <div class="sideline_cell">
-        <p-shield></p-shield>
+        <p-shield id="${nextShieldId}"></p-shield>
        </div>
     `;
   }

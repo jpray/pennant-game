@@ -4,7 +4,7 @@ export class Shield extends Piece {
 
   construct() {
     super.construct();
-    this.id = '0_shield_0';
+    //this.id = '0_shield_0';
     this.setAttribute('draggable', true);
     this.classList.add('piece');
   }

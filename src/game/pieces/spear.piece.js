@@ -4,7 +4,7 @@ export class Spear extends Piece {
 
   construct() {
     super.construct();
-    this.id = '0_spear_0';
+    //this.id = '0_spear_0';
     this.setAttribute('draggable', true);
     this.classList.add('piece');
 

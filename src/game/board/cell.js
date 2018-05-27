@@ -91,9 +91,9 @@ export class Cell extends baseView() {
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;
     return this.html`
-		 <p-sword class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
-		 <p-spear class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
-		 <p-shield class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
+		 <p-sword id="${this.pieceId}" class="${type === 'sword' ? 'show' : 'hide'}"></p-sword>
+		 <p-spear id="${this.pieceId}" class="${type === 'spear' ? 'show' : 'hide'}"></p-spear>
+		 <p-shield id="${this.pieceId}" class="${type === 'shield' ? 'show' : 'hide'}"></p-shield>
     `;
   }
 }
