@@ -2,7 +2,7 @@ import {default as hyper} from 'hyperhtml/esm/index';
 import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
-import {movePiece} from 'common/tasks/move-piece';
+import appCh, {MOVE_PIECE} from 'common/app-channel';
 import {tempState} from 'common/temp-state';
 import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
@@ -78,8 +78,7 @@ export class Cell extends baseView() {
         return;
       }
     }
-
-		movePiece(piece, this);
+    appCh.publish(MOVE_PIECE, piece, this)
 	}
 
   render() {

@@ -14,19 +14,32 @@ class AppModel extends classBuilder(class{}).with(model) {
       'board.N.N.pieceId': true,
       'players.N.points': true,
       'sideline.N': true,
-      'pieces': true
+      'pieces': true,
+      //experimental
+      'winningCell': 'board.2.2',
+      'playerInTheLead': {
+        calculateOn: ['players.N.points'],
+        calculate: () => {
+          let prevPoints = -1;
+          return this.get('players').reduce((out, player, i) => {
+            if(player.points > prevPoints) {
+              return `players.${i}`;
+            }
+          });
+        }
+      }
     };
   }
 
   get(accessor) {
-    if (this.accessors[accessor.replace(/[0-9]/g, 'N')] === -1) {
+    if (accessor && this.accessors[accessor.replace(/[0-9]/g, 'N')] === -1) {
       console.error(`I see you are wanting to access "${accessor}".  That's cool.  Please define it in the accessors array for this model.`)
     }
     return super.get(accessor);
   }
 
   set(accessor, value) {
-    if (this.accessors.indexOf(accessor.replace(/[0-9]/g, 'N')) === -1) {
+    if (this.accessors[accessor.replace(/[0-9]/g, 'N')] === -1) {
       console.error(`I see you are wanting to access "${accessor}".  That's cool.  Please define it in the accessors array for this model.`)
     }
     return super.set(accessor, value);
@@ -59,15 +72,20 @@ class AppModel extends classBuilder(class{}).with(model) {
     this.set(path, cb(this.get(path)));
   }
 
-  setPiece(action) {
-    let pieceState = getPieceStateById(action.pieceId);
-    if (pieceState.location !== 'board') {
-      pieceState.location = 'board';
-      this.decrementSideline(action);
-    }
+  getPieceStateById(pieceId) {
+    let pieces = this.get('pieces');
+    let filteredArray = pieces.filter(function (piece) {
+      return piece.pieceId === pieceId;
+    });
+    return filteredArray[0];
+  }
 
-    pieceState.cellId = action.endingCellId;
-    setPieceStateById(action.pieceId, pieceState);
+  setPieceStateById(pieceId, value) {
+    this.get('pieces').forEach((piece, index) => {
+      if (piece.pieceId === pieceId) {
+        this.set(`pieces.${index}`, value)
+      }
+    })
   }
 
   assignPoints() {

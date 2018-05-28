@@ -9,7 +9,7 @@ import {baseView} from 'common/views/base-view';
 import 'game/pieces/shield.piece';
 import 'game/pieces/spear.piece';
 import 'game/pieces/sword.piece';
-
+import 'common/app-actions';
 const NUM_PLAYERS = 2;
 
 export class PennantGame extends baseView() {
