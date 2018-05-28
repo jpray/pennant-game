@@ -5,6 +5,33 @@ import {tempState} from 'common/temp-state';
 
 class AppModel extends classBuilder(class{}).with(model) {
 
+  constructor() {
+    super();
+    this.accessors = {
+      'board': true,
+      'players': true,
+      'game.currentPlayer': true,
+      'board.N.N.pieceId': true,
+      'players.N.points': true,
+      'sideline.N': true,
+      'pieces': true
+    };
+  }
+
+  get(accessor) {
+    if (this.accessors[accessor.replace(/[0-9]/g, 'N')] === -1) {
+      console.error(`I see you are wanting to access "${accessor}".  That's cool.  Please define it in the accessors array for this model.`)
+    }
+    return super.get(accessor);
+  }
+
+  set(accessor, value) {
+    if (this.accessors.indexOf(accessor.replace(/[0-9]/g, 'N')) === -1) {
+      console.error(`I see you are wanting to access "${accessor}".  That's cool.  Please define it in the accessors array for this model.`)
+    }
+    return super.set(accessor, value);
+  }
+
   get defaultState() {
     let state = {
       actions: [],
@@ -73,5 +100,6 @@ class AppModel extends classBuilder(class{}).with(model) {
 
 const appModel = new AppModel();
 export default appModel;
+
 
 window.appModel = appModel;
