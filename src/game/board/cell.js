@@ -3,7 +3,7 @@ import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
 import appCh, {MOVE_PIECE} from 'common/app-channel';
-import {tempState} from 'common/temp-state';
+import turnModel from 'common/turn-model';
 import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
 
@@ -62,17 +62,17 @@ export class Cell extends baseView() {
 	}
 
 	handleDrop(e) {
-    if (!tempState.currentElementBeingDragged) {
+    if (!turnModel.get('activePieceData')) {
       return;
     }
     console.log(e.target);
     console.log(e.currentTarget);
 
-		let piece = tempState.currentElementBeingDragged;
+		let piece = turnModel.get('activePieceData');
     if (piece.cellId === this.cellId) {
       return;
     }
-    if (piece.cellId.includes('sideline')) {
+    if (piece.cellId && piece.cellId.includes('sideline')) {
       if (Number(this.startingCellForPlayer) !== piece.playerId) {
         piece.shake();
         return;

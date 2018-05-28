@@ -1,6 +1,6 @@
 import {baseView} from 'common/views/base-view';
 import './pieces.css';
-import {tempState} from 'common/temp-state';
+import turnModel from 'common/turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
 import appModel from 'common/app-model';
 
@@ -53,15 +53,13 @@ export class Piece extends baseView() {
     let piecePlayerId = e.currentTarget.playerId;
     if (currentPlayerId !== piecePlayerId) {
       this.shake();
-      tempState.currentElementBeingDragged = null;
+      turnModel.set('activePieceData', null);
       return;
     }
 
     if (pieceId) {
-      appModel.set('selectedPiece', pieceId);
+      turnModel.set('activePieceData', appModel.getPieceStateById(pieceId));
     }
-
-    tempState.currentElementBeingDragged = e.currentTarget;
   }
 
 }

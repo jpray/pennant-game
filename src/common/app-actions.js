@@ -1,5 +1,8 @@
 import appCh, { TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE } from './app-channel';
 import appModel from './app-model';
+import turnModel from './turn-model';
+import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
+
 import {Move} from './actions/move.action';
 
 
@@ -9,6 +12,7 @@ appChSubscriber.on(TURN_ENDED, function() {
   appCh.publish(UPDATE_POINTS);
   appCh.publish(UPDATE_WINNER);
   appCh.publish(UPDATE_CURRENT_PLAYER);
+  turnModel.reset();
 })
 
 appChSubscriber.on(UPDATE_POINTS, function() {
@@ -38,11 +42,15 @@ appChSubscriber.on(MOVE_PIECE, function(piece, cell) {
   let action = new Move();
   action.playerId = appModel.get('game.currentPlayer');
   action.boardId = 'default';
-  action.pieceId = piece.id;
-  action.startingCellId = piece.currentCell.cellId;
+  action.pieceId = piece.pieceId;
+  action.startingCellId = getCurrentCellForPiece(action.pieceId);
+  //action.startingCellId = piece.currentCell.cellId;
   action.endingCellId = cell.cellId;
   //validateAction(action);
   appModel.update('actions', actions => actions.concat([action]));
+  if (action.startingCellId && !action.startingCellId.includes('sideline')) {
+    appModel.set(`board.${action.startingCellId[0]}.${action.startingCellId[1]}`, null);
+  }
   let pieceState = appModel.getPieceStateById(action.pieceId);
   if (pieceState.location !== 'board') {
     pieceState.location = 'board';

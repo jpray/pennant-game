@@ -1,7 +1,6 @@
 import {classBuilder, model} from 'utility-toolkit';
 import {piecesDefaultState} from './tasks/pieces-default-state';
 import {getPieceStateById, setPieceStateById} from './tasks/get-piece-state-by-id';
-import {tempState} from 'common/temp-state';
 
 class AppModel extends classBuilder(class{}).with(model) {
 
@@ -59,7 +58,6 @@ class AppModel extends classBuilder(class{}).with(model) {
       graveyard: [],
       game: {
         currentPlayer: 0,
-        selectedPiece: '',
         somethingElse: [{foo: 'bye'}],
         actions: []
       }
