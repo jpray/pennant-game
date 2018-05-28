@@ -12,10 +12,11 @@ appChSubscriber.on(TURN_ENDED, function() {
 })
 
 appChSubscriber.on(UPDATE_POINTS, function() {
-  const winningCell = appModel.get('board.2.2');
-  if (winningCell && winningCell.pieceId) {
-    const player = Number(winningCell.pieceId[0]);
-    appModel.update(`players.${player}.points`, value => value++ );
+  const winningCellPieceId = appModel.get('board.2.2');
+
+  if (winningCellPieceId) {
+    const player = Number(winningCellPieceId[0]);
+    appModel.update(`players.${player}.points`, value => value + 1 );
   }
 })
 
@@ -52,11 +53,9 @@ appChSubscriber.on(MOVE_PIECE, function(piece, cell) {
 
   let startingCell = (action.startingCellId || 'SS').split('');
   let endingCell = action.endingCellId.split('');
-  appModel.set(`board.${startingCell[0]}.${startingCell[1]}`, () => null );
+  appModel.set(`board.${startingCell[0]}.${startingCell[1]}`, null);
   //TODO: debug board set
-  debugger;
-  appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, () => action.pieceId );
-
+  appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, action.pieceId);
   appModel.setPieceStateById(action.pieceId, pieceState);
 
   appCh.publish(TURN_ENDED);
