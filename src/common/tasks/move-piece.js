@@ -1,4 +1,4 @@
-import {appModel} from '../app-model';
+import appModel from '../app-model';
 import {Move} from '../actions/move.action';
 
 function performMoveAction(action) {
@@ -17,7 +17,7 @@ function performMoveAction(action) {
 
 export function movePiece(piece, cell) {
   let action = new Move();
-  action.playerId = appModel.get(appModel.accessors.CURRENT_PLAYER);
+  action.playerId = appModel.get('game.currentPlayer');
   action.boardId = 'default';
   action.pieceId = piece.id;
   action.startingCellId = piece.currentCell.cellId;

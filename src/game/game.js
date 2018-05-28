@@ -4,7 +4,7 @@ import {Board} from './board/board';
 import {StatusBoard} from './status-board/status-board';
 import './side-line/side-line';
 import {Player} from '../player';
-import {appModel} from 'common/app-model';
+import appModel from 'common/app-model';
 import {baseView} from 'common/views/base-view';
 
 
@@ -18,8 +18,6 @@ export class Game extends classBuilder(baseView()).with(
 		this.appModel = appModel;
     this.numPlayers = numPlayers;
     this.initPlayers();
-    this.board = new Board();
-		this.statusBoard = new StatusBoard();
     this.currentPlayerIndex = 0;
 		this.listenForEvents();
   }
@@ -55,9 +53,9 @@ export class Game extends classBuilder(baseView()).with(
 
   render() {
     return this.html`
-				${this.statusBoard}
+				<status-board />
 				<side-line player-id="0"/>
-        ${this.board}
+        <p-board state="${this.appModel.get('board')}" />
 				<side-line player-id="1"/>
       `;
   }

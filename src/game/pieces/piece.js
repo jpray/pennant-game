@@ -2,7 +2,7 @@ import {baseView} from 'common/views/base-view';
 import './pieces.css';
 import {tempState} from 'common/temp-state';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
-import {appModel} from 'common/app-model';
+import appModel from 'common/app-model';
 
 export class Piece extends baseView() {
 
@@ -49,7 +49,7 @@ export class Piece extends baseView() {
   handleClick(e) {
     e.preventDefault();
     let pieceId = e.currentTarget.pieceId || e.currentTarget.id;
-    let currentPlayerId = appModel.get(appModel.accessors.CURRENT_PLAYER);
+    let currentPlayerId = appModel.get('game.currentPlayer');
     let piecePlayerId = e.currentTarget.playerId;
     if (currentPlayerId !== piecePlayerId) {
       this.shake();

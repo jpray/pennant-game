@@ -3,7 +3,7 @@ import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import './side-line.css';
 import delegate from 'dom-delegate';
-import {appModel} from 'common/app-model';
+import appModel from 'common/app-model';
 import {baseView} from 'common/views/base-view';
 
 export class SideLine extends baseView() {
@@ -25,8 +25,8 @@ export class SideLine extends baseView() {
     const appModelPropBinder = appModel
       .createPropertyBinder(this)
       .addBindings([
-      [appModel.accessors['SIDELINE_PLAYER'+this.playerId], 'numSidelinePieces'],
-      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer']
+      [`sideline.${this.playerId}`, 'numSidelinePieces'],
+      ['game.currentPlayer', 'currentPlayer']
     ]);
 
   }

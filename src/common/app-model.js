@@ -5,25 +5,16 @@ import {tempState} from 'common/temp-state';
 
 class AppModel extends classBuilder(class{}).with(model) {
 
-  constructor() {
-    super();
-    this.listeners = [];
-
-    this.accessors = {
-      CURRENT_PLAYER: 'game.currentPlayer',
-      GAME: 'game',
-      SIDELINE_PLAYER0: 'sideline.0',
-      SIDELINE_PLAYER1: 'sideline.1',
-      PIECES: 'pieces'
-    };
-  }
-
   get defaultState() {
     let state = {
       actions: [],
       players: [{points:0},{points:0}],
       pieces: piecesDefaultState(),
-      board: [],
+      board: Array.apply(null, Array(5)).map((ignore, rowIndex) => {
+        return Array.apply(null, Array(5)).map((ignore, colIndex) => {
+          return null;
+        })
+      }),
       sideline: [9,9],
       graveyard: [],
       game: {
@@ -34,6 +25,11 @@ class AppModel extends classBuilder(class{}).with(model) {
       }
     };
     return state;
+  }
+
+  //TODO add to model
+  update(path, cb) {
+    this.set(path, cb(this.get(path)));
   }
 
   setPiece(action) {
@@ -61,19 +57,21 @@ class AppModel extends classBuilder(class{}).with(model) {
   endTurn() {
 
     tempState.currentElementBeingDragged = null;
-    if (this.get(this.accessors.CURRENT_PLAYER) === 0) {
-      this.set(this.accessors.CURRENT_PLAYER,1);
+    if (this.get('game.currentPlayer') === 0) {
+      this.set('game.currentPlayer',1);
     } else {
-      this.set(this.accessors.CURRENT_PLAYER,0);
+      this.set('game.currentPlayer',0);
     }
   }
 
   decrementSideline(action) {
-    this.set(this.accessors['SIDELINE_PLAYER'+action.playerId], this.get(this.accessors['SIDELINE_PLAYER'+action.playerId])-1);
+    this.set(`sideline.${action.playerId}`, this.get(`sideline.${action.playerId}`)-1);
   }
 
 
 }
 
 const appModel = new AppModel();
-export { appModel }
+export default appModel;
+
+window.appModel = appModel;
