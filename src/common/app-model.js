@@ -88,32 +88,6 @@ class AppModel extends classBuilder(class{}).with(model) {
     })
   }
 
-  assignPoints() {
-    let winningCell = document.querySelector('.winning-cell');
-    if (winningCell.pieceId) {
-      let player = Number(winningCell.pieceId[0]);
-      let points = this.get(`players.${player}.points`);
-      this.set(`players.${player}.points`,
-        points+1
-      );
-    }
-  }
-
-  endTurn() {
-
-    tempState.currentElementBeingDragged = null;
-    if (this.get('game.currentPlayer') === 0) {
-      this.set('game.currentPlayer',1);
-    } else {
-      this.set('game.currentPlayer',0);
-    }
-  }
-
-  decrementSideline(action) {
-    this.set(`sideline.${action.playerId}`, this.get(`sideline.${action.playerId}`)-1);
-  }
-
-
 }
 
 const appModel = new AppModel();
