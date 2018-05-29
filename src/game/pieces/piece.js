@@ -3,7 +3,7 @@ import './pieces.css';
 import turnModel from 'common/turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
 import appModel from 'common/app-model';
-
+import pieceCh, { SHAKE } from './piece-channel';
 export class Piece extends baseView() {
 
   static get properties() {
@@ -29,6 +29,15 @@ export class Piece extends baseView() {
 
   connected() {
     this.addEventListeners();
+    this.pieceChSubscriber = pieceCh.createSubscriber().on(SHAKE, (pieceId) => {
+      if (this.id === pieceId) {
+        this.shake();
+      }
+    })
+  }
+
+  disconnected() {
+    this.pieceChSubscriber.destroy();
   }
 
   get currentCell() {

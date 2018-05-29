@@ -6,6 +6,7 @@ import appCh, {MOVE_PIECE} from 'common/app-channel';
 import turnModel from 'common/turn-model';
 import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
+import pieceCh, { SHAKE } from '../pieces/piece-channel';
 
 export class Cell extends baseView() {
 
@@ -72,9 +73,9 @@ export class Cell extends baseView() {
     if (piece.cellId === this.cellId) {
       return;
     }
-    if (piece.cellId && piece.cellId.includes('sideline')) {
+    if (!piece.cellId || piece.cellId.includes('sideline')) {
       if (Number(this.startingCellForPlayer) !== piece.playerId) {
-        piece.shake();
+        pieceCh.publish(SHAKE, piece.pieceId);
         return;
       }
     }
