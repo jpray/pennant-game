@@ -2,10 +2,11 @@ import {default as hyper} from 'hyperhtml/esm/index';
 import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
-import {movePiece} from 'common/tasks/move-piece';
-import {tempState} from 'common/temp-state';
+import appCh, {MOVE_PIECE} from 'common/app-channel';
+import turnModel from 'common/turn-model';
 import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
+import pieceCh, { SHAKE } from '../pieces/piece-channel';
 
 export class Cell extends baseView() {
 
@@ -62,24 +63,23 @@ export class Cell extends baseView() {
 	}
 
 	handleDrop(e) {
-    if (!tempState.currentElementBeingDragged) {
+    if (!turnModel.get('activePieceData')) {
       return;
     }
     console.log(e.target);
     console.log(e.currentTarget);
 
-		let piece = tempState.currentElementBeingDragged;
+		let piece = turnModel.get('activePieceData');
     if (piece.cellId === this.cellId) {
       return;
     }
-    if (piece.cellId.includes('sideline')) {
+    if (!piece.cellId || piece.cellId.includes('sideline')) {
       if (Number(this.startingCellForPlayer) !== piece.playerId) {
-        piece.shake();
+        pieceCh.publish(SHAKE, piece.pieceId);
         return;
       }
     }
-
-		movePiece(piece, this);
+    appCh.publish(MOVE_PIECE, piece, this)
 	}
 
   render() {

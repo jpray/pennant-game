@@ -1,9 +1,9 @@
 import {baseView} from 'common/views/base-view';
 import './pieces.css';
-import {tempState} from 'common/temp-state';
+import turnModel from 'common/turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
-import {appModel} from 'common/app-model';
-
+import appModel from 'common/app-model';
+import pieceCh, { SHAKE } from './piece-channel';
 export class Piece extends baseView() {
 
   static get properties() {
@@ -29,6 +29,15 @@ export class Piece extends baseView() {
 
   connected() {
     this.addEventListeners();
+    this.pieceChSubscriber = pieceCh.createSubscriber().on(SHAKE, (pieceId) => {
+      if (this.id === pieceId) {
+        this.shake();
+      }
+    })
+  }
+
+  disconnected() {
+    this.pieceChSubscriber.destroy();
   }
 
   get currentCell() {
@@ -49,19 +58,17 @@ export class Piece extends baseView() {
   handleClick(e) {
     e.preventDefault();
     let pieceId = e.currentTarget.pieceId || e.currentTarget.id;
-    let currentPlayerId = appModel.get(appModel.accessors.CURRENT_PLAYER);
+    let currentPlayerId = appModel.get('game.currentPlayer');
     let piecePlayerId = e.currentTarget.playerId;
     if (currentPlayerId !== piecePlayerId) {
       this.shake();
-      tempState.currentElementBeingDragged = null;
+      turnModel.set('activePieceData', null);
       return;
     }
 
     if (pieceId) {
-      appModel.set('selectedPiece', pieceId);
+      turnModel.set('activePieceData', appModel.getPieceStateById(pieceId));
     }
-
-    tempState.currentElementBeingDragged = e.currentTarget;
   }
 
 }

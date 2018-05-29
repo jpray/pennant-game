@@ -5,7 +5,7 @@ import {Cell} from './cell';
 import './board.css';
 import {baseView} from 'common/views/base-view';
 import {getCurrentPieceForCell} from 'common/tasks/get-current-piece-for-cell';
-import {appModel} from 'common/app-model';
+import appModel from 'common/app-model';
 
 export class Board extends baseView() {
   constructor() {

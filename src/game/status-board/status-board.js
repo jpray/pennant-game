@@ -3,7 +3,7 @@ import {classBuilder} from 'utility-toolkit';
 import './status-board.css';
 import delegate from 'dom-delegate';
 //import {getCurrentPlayer} from 'common/providers/current-player';
-import {appModel} from 'common/app-model';
+import appModel from 'common/app-model';
 import {baseView} from 'common/views/base-view';
 
 export class StatusBoard extends baseView() {
@@ -13,7 +13,7 @@ export class StatusBoard extends baseView() {
     const appModelPropBinder = appModel
       .createPropertyBinder(this)
       .addBindings([
-      [appModel.accessors.CURRENT_PLAYER, 'currentPlayer'],
+      ['game.currentPlayer', 'currentPlayer'],
       ['players.0.points', 'player0Points'],
       ['players.1.points', 'player1Points']
     ]);

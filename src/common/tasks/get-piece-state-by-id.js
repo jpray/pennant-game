@@ -1,4 +1,4 @@
-import  {appModel} from '../app-model';
+import  appModel from '../app-model';
 
 export function getPieceStateById(pieceId) {
   let pieces = appModel.get('pieces');

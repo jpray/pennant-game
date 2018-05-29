@@ -1,4 +1,4 @@
-import {appModel} from '../app-model';
+import appModel from '../app-model';
 
 export function getCurrentPieceForCell(cellId) {
   let pieceData = appModel.get('pieces').reduce((out, data) => {

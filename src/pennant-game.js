@@ -4,12 +4,12 @@ import {stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import {Game} from 'game/game';
 import delegate from 'dom-delegate';
-import {tempState} from 'common/temp-state';
+import turnModel from 'common/turn-model';
 import {baseView} from 'common/views/base-view';
 import 'game/pieces/shield.piece';
 import 'game/pieces/spear.piece';
 import 'game/pieces/sword.piece';
-
+import 'common/app-actions';
 const NUM_PLAYERS = 2;
 
 export class PennantGame extends baseView() {
@@ -28,7 +28,7 @@ export class PennantGame extends baseView() {
 	    });
 
 			this.delegateEl.on('dragstart', '.piece', function(e) {
-	      tempState.currentElementBeingDragged = e.target;
+	      turnModel.set('activePieceData', e.target);
 	    });
 
 		}
