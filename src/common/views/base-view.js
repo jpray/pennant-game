@@ -18,6 +18,10 @@ export function baseView() {
 				return {};
 			}
 
+			propertiesChanged() {
+				this.render();
+			}
+
 	    render() {
 	      return this.html``;
 	    }

@@ -46,7 +46,13 @@ export class Cell extends baseView() {
 				value() {
 					return NaN;
 				}
-			}
+			},
+      isAllowedMove: {
+        type: String,
+        value() {
+          return 'false';
+        }
+      }
 		};
 	}
 
@@ -79,6 +85,12 @@ export class Cell extends baseView() {
         return;
       }
     }
+
+    if (!turnModel.get('allowedCells').includes(this.cellId)) {
+        pieceCh.publish(SHAKE, piece.pieceId);
+        return;
+    }
+
     appCh.publish(MOVE_PIECE, piece, this)
 	}
 
@@ -92,6 +104,8 @@ export class Cell extends baseView() {
 		} else if (this.winningCell) {
 			this.classList.add('winning-cell');
 		}
+
+    this.classList[this.isAllowedMove === 'true' ? 'add' : 'remove']('allowed-move-cell');
 
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;

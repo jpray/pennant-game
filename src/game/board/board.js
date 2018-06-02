@@ -6,8 +6,21 @@ import './board.css';
 import {baseView} from 'common/views/base-view';
 import {getCurrentPieceForCell} from 'common/tasks/get-current-piece-for-cell';
 import appModel from 'common/app-model';
+import turnModel from 'common/turn-model';
 
 export class Board extends baseView() {
+
+  static get properties() {
+		return {
+			allowedCells: {
+				type: Array,
+				value() {
+					return [];
+				}
+			}
+    };
+	}
+
   constructor() {
     super();
     this.state = Array.apply(null, Array(5)).map((ignore, rowIndex) => {
@@ -16,6 +29,9 @@ export class Board extends baseView() {
       })
     })
     appModel.createSubscriber().on('*', this.render.bind(this));
+    turnModel.createPropertyBinder(this).addBindings(
+      ['allowedCells', 'allowedCells']
+    );
   }
 
   render() {
@@ -32,12 +48,14 @@ export class Board extends baseView() {
           if ((x === 4 && y === 4) || (x === 4 && y === 3) || (x === 3 && y === 4)) {
             startingCellForPlayer = 1;
           }
+          let isAllowedMove = this.allowedCells.includes(`${x}${y}`) ? 'true' : 'false';
           return hyper.wire(cell)`
           <p-cell
             cell-id="${cellId}"
             piece-id="${pieceData.pieceId}"
             winning-cell="${isWinningCell}"
             starting-cell-for-player="${startingCellForPlayer}"
+            is-allowed-move="${isAllowedMove}"
           ></p-cell>
           `})}
       </div>`)}

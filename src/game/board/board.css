@@ -37,3 +37,7 @@ p-cell {
 .winning-cell {
   background-color:gold;
 }
+
+.allowed-move-cell {
+  border:2px solid green;
+}
