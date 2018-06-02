@@ -26,13 +26,13 @@ p-cell {
   align-items: center;
 }
 
-.starting-cell--player-one {
+/*.starting-cell--player-one {
   background-color:red;
 }
 
 .starting-cell--player-two {
   background-color:blue;
-}
+}*/
 
 .winning-cell {
   background-color:gold;
@@ -40,4 +40,8 @@ p-cell {
 
 .allowed-move-cell {
   border:2px solid green;
+}
+
+.allowed-push-cell {
+  border:2px solid brown;
 }

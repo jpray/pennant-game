@@ -17,6 +17,12 @@ export class Board extends baseView() {
 				value() {
 					return [];
 				}
+			},
+      allowedPushCells: {
+				type: Array,
+				value() {
+					return [];
+				}
 			}
     };
 	}
@@ -29,9 +35,10 @@ export class Board extends baseView() {
       })
     })
     appModel.createSubscriber().on('*', this.render.bind(this));
-    turnModel.createPropertyBinder(this).addBindings(
-      ['allowedCells', 'allowedCells']
-    );
+    turnModel.createPropertyBinder(this).addBindings([
+      ['allowedCells', 'allowedCells'],
+      ['allowedPushCells', 'allowedPushCells']
+    ]);
   }
 
   render() {
@@ -49,6 +56,8 @@ export class Board extends baseView() {
             startingCellForPlayer = 1;
           }
           let isAllowedMove = this.allowedCells.includes(`${x}${y}`) ? 'true' : 'false';
+          let isAllowedPush = this.allowedPushCells.includes(`${x}${y}`) ? 'true' : 'false';
+
           return hyper.wire(cell)`
           <p-cell
             cell-id="${cellId}"
@@ -56,6 +65,7 @@ export class Board extends baseView() {
             winning-cell="${isWinningCell}"
             starting-cell-for-player="${startingCellForPlayer}"
             is-allowed-move="${isAllowedMove}"
+            is-allowed-push="${isAllowedPush}"
           ></p-cell>
           `})}
       </div>`)}

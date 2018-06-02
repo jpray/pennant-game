@@ -8,3 +8,4 @@ export const UPDATE_POINTS = 'UPDATE_POINTS';
 export const UPDATE_WINNER = 'UPDATE_WINNER';
 export const UPDATE_CURRENT_PLAYER = 'UPDATE_CURRENT_PLAYER';
 export const MOVE_PIECE = 'MOVE_PIECE';
+export const MOVE_ENDED = 'MOVE_ENDED';

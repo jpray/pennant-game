@@ -60,6 +60,11 @@ export class Piece extends baseView() {
     let pieceId = e.currentTarget.pieceId || e.currentTarget.id;
     let currentPlayerId = appModel.get('game.currentPlayer');
     let piecePlayerId = e.currentTarget.playerId;
+
+    if (turnModel.get('phase') === 'PUSH') {
+      return;
+    }
+
     if (currentPlayerId !== piecePlayerId) {
       this.shake();
       turnModel.set('activePieceData', null);

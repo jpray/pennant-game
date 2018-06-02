@@ -27,9 +27,9 @@ export class PennantGame extends baseView() {
 	      }
 	    });
 
-			this.delegateEl.on('dragstart', '.piece', function(e) {
-	      turnModel.set('activePieceData', e.target);
-	    });
+			// this.delegateEl.on('dragstart', '.piece', function(e) {
+	    //   turnModel.set('activePieceData', e.target);
+	    // });
 
 		}
 

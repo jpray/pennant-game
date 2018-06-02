@@ -2,7 +2,7 @@ import {default as hyper} from 'hyperhtml/esm/index';
 import {customElement, events, properties, stopEvent} from 'utility-toolkit';
 import {classBuilder} from 'utility-toolkit';
 import delegate from 'dom-delegate';
-import appCh, {MOVE_PIECE} from 'common/app-channel';
+import appCh, {MOVE_PIECE, TURN_ENDED} from 'common/app-channel';
 import turnModel from 'common/turn-model';
 import {baseView} from 'common/views/base-view';
 import {getPieceStateById} from 'common/tasks/get-piece-state-by-id';
@@ -52,6 +52,12 @@ export class Cell extends baseView() {
         value() {
           return 'false';
         }
+      },
+      isAllowedPush: {
+        type: String,
+        value() {
+          return 'false';
+        }
       }
 		};
 	}
@@ -77,6 +83,9 @@ export class Cell extends baseView() {
 
 		let piece = turnModel.get('activePieceData');
     if (piece.cellId === this.cellId) {
+      if (turnModel.get('phase') === 'PUSH') {
+        appCh.publish(TURN_ENDED);
+      }
       return;
     }
     if (!piece.cellId || piece.cellId.includes('sideline')) {
@@ -106,6 +115,8 @@ export class Cell extends baseView() {
 		}
 
     this.classList[this.isAllowedMove === 'true' ? 'add' : 'remove']('allowed-move-cell');
+    this.classList[this.isAllowedPush === 'true' ? 'add' : 'remove']('allowed-push-cell');
+
 
 		let pieceState = getPieceStateById(this.pieceId);
 		let type = pieceState && pieceState.type;

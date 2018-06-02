@@ -1,4 +1,4 @@
-import appCh, { TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE } from './app-channel';
+import appCh, { MOVE_ENDED, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE } from './app-channel';
 import appModel from './app-model';
 import turnModel from './turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
@@ -66,5 +66,14 @@ appChSubscriber.on(MOVE_PIECE, function(piece, cell) {
   appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, action.pieceId);
   appModel.setPieceStateById(action.pieceId, pieceState);
 
-  appCh.publish(TURN_ENDED);
+  turnModel.set('activePieceData', appModel.getPieceStateById(action.pieceId));
+  appCh.publish(MOVE_ENDED);
+})
+
+appChSubscriber.on(MOVE_ENDED, function() {
+  turnModel.calculateAllowedPushCells();
+  if (turnModel.get('allowedPushCells').length === 0) {
+    appCh.publish(TURN_ENDED);
+    return;
+  }
 })
