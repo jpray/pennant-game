@@ -2,6 +2,7 @@ import appCh, { MOVE_ENDED, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CUR
 import appModel from './app-model';
 import turnModel from './turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
+import {getCurrentPieceForCell} from 'common/tasks/get-current-piece-for-cell';
 
 import {Move} from './actions/move.action';
 import {Push} from './actions/push.action';
@@ -59,14 +60,7 @@ appChSubscriber.on(MOVE_PIECE, function(piece, cell) {
   }
 
   pieceState.cellId = action.endingCellId;
-
-  let startingCell = (action.startingCellId || 'SS').split('');
-  let endingCell = action.endingCellId.split('');
-  appModel.set(`board.${startingCell[0]}.${startingCell[1]}`, null);
-  //TODO: debug board set
-  appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, action.pieceId);
   appModel.setPieceStateById(action.pieceId, pieceState);
-
   turnModel.set('activePieceData', appModel.getPieceStateById(action.pieceId));
   appCh.publish(MOVE_ENDED);
 })
@@ -90,19 +84,31 @@ appChSubscriber.on(PUSH_PIECE, function(piece, pushedPiece, xChange, yChange) {
   action.yChange = yChange;
   appModel.update('actions', actions => actions.concat([action]));
 
+  function doPush(cellId, xChange, yChange) {
+    let pushedPieceState = getCurrentPieceForCell(cellId);
+    let pushedPieceId = pushedPieceState.pieceId;
+    pushedPieceState.cellId = computePushCellId(pushedPieceState.cellId, xChange, yChange);
 
-  let pushedPieceState = appModel.getPieceStateById(action.pushedPieceId);
+    let nextPushedPieceId = getCurrentPieceForCell(pushedPieceState.cellId);
+    if (nextPushedPieceId) {
+      doPush(pushedPieceState.cellId, xChange, yChange);
+    }
 
-  debugger;
-  // pushedPieceState.cellId = '22';
-  //
-  // let startingCell = (action.startingCellId || 'SS').split('');
-  // let endingCell = action.endingCellId.split('');
-  // appModel.set(`board.${startingCell[0]}.${startingCell[1]}`, null);
-  // //TODO: debug board set
-  // appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, action.pieceId);
-  // appModel.setPieceStateById(action.pieceId, pieceState);
-  //
-  // turnModel.set('activePieceData', appModel.getPieceStateById(action.pieceId));
-  // appCh.publish(MOVE_ENDED);
+    appModel.setPieceStateById(pushedPieceId, pushedPieceState);
+  }
+
+  doPush(getCurrentCellForPiece(action.pushedPieceId), action.xChange, action.yChange);
+
+  appCh.publish(MOVE_ENDED);
 })
+
+function computePushCellId(cellId, xChange, yChange) {
+  let startX = Number(cellId[0]);
+  let startY = Number(cellId[1]);
+  let newX = startX + xChange;
+  let newY = startY + yChange;
+  if (newX < 0 || newX > 4 || newY < 0 || newY > 4) {
+    return 'graveyard';
+  }
+  return `${newX}${newY}`;
+}

@@ -6,7 +6,7 @@ p-board {
   display:flex;
   flex-direction: column;
   transform: rotate(45deg);
-  margin: 100px;
+  margin: 100px auto;
 }
 
 .b-row {
