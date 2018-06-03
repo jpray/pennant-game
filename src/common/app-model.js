@@ -10,6 +10,7 @@ class AppModel extends classBuilder(class{}).with(model) {
       'board': true,
       'players': true,
       'game.currentPlayer': true,
+      'game.winningPlayer': true,
       'board.N.N.pieceId': true,
       'players.N.points': true,
       'sideline.N': true,
@@ -58,6 +59,7 @@ class AppModel extends classBuilder(class{}).with(model) {
       graveyard: [],
       game: {
         currentPlayer: 0,
+        winningPlayer: null,
         somethingElse: [{foo: 'bye'}],
         actions: []
       }

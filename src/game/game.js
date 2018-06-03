@@ -25,6 +25,12 @@ export class Game extends baseView() {
 				value() {
 					return 999;
 				}
+			},
+      winningPlayer: {
+				type: Number,
+				value() {
+					return NaN;
+				}
 			}
 		};
 	}
@@ -33,7 +39,8 @@ export class Game extends baseView() {
 		this.appModelPropBinder = appModel
 			.createPropertyBinder(this)
 			.addBindings([
-			['game.currentPlayer', 'currentPlayer']
+			['game.currentPlayer', 'currentPlayer'],
+      ['game.winningPlayer','winningPlayer']
 		]);
 	}
 
@@ -51,6 +58,10 @@ export class Game extends baseView() {
 	}
 
   render() {
+
+    if (this.winningPlayer === 0 || this.winningPlayer === 1) {
+      this.classList.add('game--over');
+    }
 
 		this.classList[this.currentPlayer === 0 ? 'add' : 'remove']('game--first-player');
 		this.classList[this.currentPlayer === 1 ? 'add' : 'remove']('game--second-player');

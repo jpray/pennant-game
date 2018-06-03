@@ -45,3 +45,7 @@ p-cell {
 .game--second-player .allowed-move-cell, .game--second-player .allowed-push-cell {
   border:2px solid blue;
 }
+
+.game--over {
+  opacity: 0.3;
+}

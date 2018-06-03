@@ -15,7 +15,8 @@ export class StatusBoard extends baseView() {
       .addBindings([
       ['game.currentPlayer', 'currentPlayer'],
       ['players.0.points', 'player0Points'],
-      ['players.1.points', 'player1Points']
+      ['players.1.points', 'player1Points'],
+      ['game.winningPlayer','winningPlayer']
     ]);
 
   }
@@ -33,6 +34,10 @@ export class StatusBoard extends baseView() {
 				value() {
 					return 0;
 				}
+			},
+      winningPlayer: {
+				type: Number,
+				reflectToAttribute: false
 			},
       player0Points: {
 				type: Number,
@@ -67,8 +72,8 @@ export class StatusBoard extends baseView() {
              <button onclick="${this.makeBigger}" id="scale-bigger">+</button><br><br>
 
 
-      <div class="player-info"><span class="player-swatch player-one-swatch"></span> Player 1's Penants: ${this.player0Points}</div>
-      <div class="player-info"><span class="player-swatch player-two-swatch"></span> Player 2's Penants: ${this.player1Points}</div>
+      <div class="player-info"><span class="player-swatch player-one-swatch"></span> Player 1 Penants: ${this.player0Points} ${this.winningPlayer === 0 ? 'Winner!' : ''}</div>
+      <div class="player-info"><span class="player-swatch player-two-swatch"></span> Player 2 Penants: ${this.player1Points} ${this.winningPlayer === 1 ? 'Winner!' : ''}</div>
     `;
   }
 	addEventListeners() {

@@ -18,10 +18,10 @@ appChSubscriber.on(TURN_ENDED, function() {
 })
 
 appChSubscriber.on(UPDATE_POINTS, function() {
-  const winningCellPieceId = appModel.get('board.2.2');
+  let pieceInWinningCell = getCurrentPieceForCell('22');
 
-  if (winningCellPieceId) {
-    const player = Number(winningCellPieceId[0]);
+  if (pieceInWinningCell) {
+    const player = Number(pieceInWinningCell.pieceId[0]);
     appModel.update(`players.${player}.points`, value => value + 1 );
   }
 })
@@ -29,9 +29,9 @@ appChSubscriber.on(UPDATE_POINTS, function() {
 appChSubscriber.on(UPDATE_WINNER, function() {
   const firstPlayerPoints = appModel.get('players.0.points');
   const secondPlayerPoints = appModel.get('players.1.points');
-  if (firstPlayerPoints >= 8) {
+  if (firstPlayerPoints >= 3) {
     appModel.set(`game.winningPlayer`, 0);
-  } else if (secondPlayerPoints >= 8) {
+  } else if (secondPlayerPoints >= 3) {
     appModel.set(`game.winningPlayer`, 1);
   }
 })
