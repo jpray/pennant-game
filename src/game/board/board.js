@@ -58,7 +58,7 @@ export class Board extends baseView() {
           let isAllowedMove = this.allowedCells.includes(`${x}${y}`) ? 'true' : 'false';
           let isAllowedPush = this.allowedPushCells.includes(`${x}${y}`) ? 'true' : 'false';
 
-          return hyper.wire(cell)`
+          return hyper.wire()`
           <p-cell
             cell-id="${cellId}"
             piece-id="${pieceData.pieceId}"

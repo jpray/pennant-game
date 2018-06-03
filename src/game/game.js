@@ -10,17 +10,36 @@ import {baseView} from 'common/views/base-view';
 
 const NUM_POINTS_TO_WIN = 9;
 
-export class Game extends classBuilder(baseView()).with(
-	state) {
+export class Game extends baseView() {
 
-  constructor(numPlayers = 2) {
+  constructor() {
     super();
 		this.appModel = appModel;
-    this.numPlayers = numPlayers;
-    this.initPlayers();
-    this.currentPlayerIndex = 0;
 		this.listenForEvents();
   }
+
+	static get properties() {
+		return {
+			currentPlayer: {
+				type: Number,
+				value() {
+					return 999;
+				}
+			}
+		};
+	}
+
+	connected() {
+		this.appModelPropBinder = appModel
+			.createPropertyBinder(this)
+			.addBindings([
+			['game.currentPlayer', 'currentPlayer']
+		]);
+	}
+
+	disconnected() {
+		this.appModelPropBinder.destroy();
+	}
 
 	listenForEvents() {
 		this.addEventListener('gameEvent', this.handleGameEvent.bind(this));
@@ -31,27 +50,11 @@ export class Game extends classBuilder(baseView()).with(
 		//this.appModel.handleEvent(details);
 	}
 
-  get currentPlayer() {
-    return this.players[this.currentPlayerIndex];
-  }
-
-  initPlayers() {
-    this.players = Array.apply(null, Array(this.numPlayers)).map(() => {
-      return new Player();
-    });
-  }
-
-  hasWinner() {
-    return this.players.reduce((out, player) => {
-      return out || player.points >= NUM_POINTS_TO_WIN;
-    },false)
-  }
-
-  async playTurn() {
-    await this.currentPlayer.playTurn(this.game);
-  }
-
   render() {
+
+		this.classList[this.currentPlayer === 0 ? 'add' : 'remove']('game--first-player');
+		this.classList[this.currentPlayer === 1 ? 'add' : 'remove']('game--second-player');
+
     return this.html`
 				<status-board />
 				<side-line player-id="0"/>

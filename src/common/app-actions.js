@@ -1,9 +1,10 @@
-import appCh, { MOVE_ENDED, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE } from './app-channel';
+import appCh, { MOVE_ENDED, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE, PUSH_PIECE } from './app-channel';
 import appModel from './app-model';
 import turnModel from './turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
 
 import {Move} from './actions/move.action';
+import {Push} from './actions/push.action';
 
 
 const appChSubscriber = appCh.createSubscriber();
@@ -76,4 +77,32 @@ appChSubscriber.on(MOVE_ENDED, function() {
     appCh.publish(TURN_ENDED);
     return;
   }
+})
+
+appChSubscriber.on(PUSH_PIECE, function(piece, pushedPiece, xChange, yChange) {
+  let action = new Push();
+  action.playerId = appModel.get('game.currentPlayer');
+  action.boardId = 'default';
+  action.pieceId = piece.pieceId;
+  action.currentCellId = getCurrentCellForPiece(action.pieceId);
+  action.pushedPieceId = pushedPiece.pieceId;
+  action.xChange = xChange;
+  action.yChange = yChange;
+  appModel.update('actions', actions => actions.concat([action]));
+
+
+  let pushedPieceState = appModel.getPieceStateById(action.pushedPieceId);
+
+  debugger;
+  // pushedPieceState.cellId = '22';
+  //
+  // let startingCell = (action.startingCellId || 'SS').split('');
+  // let endingCell = action.endingCellId.split('');
+  // appModel.set(`board.${startingCell[0]}.${startingCell[1]}`, null);
+  // //TODO: debug board set
+  // appModel.set(`board.${endingCell[0]}.${endingCell[1]}`, action.pieceId);
+  // appModel.setPieceStateById(action.pieceId, pieceState);
+  //
+  // turnModel.set('activePieceData', appModel.getPieceStateById(action.pieceId));
+  // appCh.publish(MOVE_ENDED);
 })

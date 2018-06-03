@@ -26,22 +26,22 @@ p-cell {
   align-items: center;
 }
 
-/*.starting-cell--player-one {
-  background-color:red;
+.starting-cell--player-one {
+  background-color:#E6E6E6;
 }
 
 .starting-cell--player-two {
-  background-color:blue;
-}*/
+  background-color:#E6E6E6;
+}
 
 .winning-cell {
   background-color:gold;
 }
 
-.allowed-move-cell {
-  border:2px solid green;
+.game--first-player .allowed-move-cell, .game--first-player .allowed-push-cell {
+  border:2px solid red;
 }
 
-.allowed-push-cell {
-  border:2px solid brown;
+.game--second-player .allowed-move-cell, .game--second-player .allowed-push-cell {
+  border:2px solid blue;
 }
