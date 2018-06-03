@@ -1,6 +1,6 @@
 p-sword, p-spear, p-shield {
-  height: 70px;
-  width: 70px;
+  height: 3.5rem;
+  width: 3.5rem;
   display:block;
   border:1px solid #FFF;
 }

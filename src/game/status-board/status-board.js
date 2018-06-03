@@ -51,11 +51,24 @@ export class StatusBoard extends baseView() {
 		};
 	}
 
+  makeSmaller(e) {
+    let currentSize = Number(document.documentElement.style.fontSize.replace('%','') || 100);
+    document.documentElement.style.fontSize = `${currentSize*.9}%`;
+  }
+
+  makeBigger(e) {
+    let currentSize = Number(document.documentElement.style.fontSize.replace('%','') || 100);
+    document.documentElement.style.fontSize = `${currentSize*1.1}%`;
+  }
+
   render() {
     return this.html`
-      Player ${this.currentPlayer}'s Turn.
-      <div>Player 1's Points: ${this.player0Points}</div>
-      <div>Player 2's Points: ${this.player1Points}</div>
+      Scale: <button onclick="${this.makeSmaller}" id="scale-smaller">-</button>
+             <button onclick="${this.makeBigger}" id="scale-bigger">+</button><br><br>
+
+
+      <div class="player-info"><span class="player-swatch player-one-swatch"></span> Player 1's Penants: ${this.player0Points}</div>
+      <div class="player-info"><span class="player-swatch player-two-swatch"></span> Player 2's Penants: ${this.player1Points}</div>
     `;
   }
 	addEventListeners() {

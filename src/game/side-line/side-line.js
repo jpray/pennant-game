@@ -69,16 +69,18 @@ export class SideLine extends baseView() {
     let nextShieldId = `${this.currentPlayer}_shield_${Math.abs(this.numSidelinePieces-9)}`
 
     return this.html`
-       <div>Number of Available Pieces: ${this.numSidelinePieces}</div>
-       <div class="sideline_cell">
-        <p-sword cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSwordId}"></p-sword>
-       </div>
-       <div class="sideline_cell">
-        <p-spear cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSpearId}"></p-spear>
-       </div>
-       <div class="sideline_cell">
-        <p-shield cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextShieldId}"></p-shield>
-       </div>
+       <div>Player ${this.playerId+1}: Pieces left: ${this.numSidelinePieces}</div>
+       <div class="sideline-pieces">
+         <div class="sideline_cell">
+          <p-sword cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSwordId}"></p-sword>
+         </div>
+         <div class="sideline_cell">
+          <p-spear cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextSpearId}"></p-spear>
+         </div>
+         <div class="sideline_cell">
+          <p-shield cell-id="${this.playerId+'_sideline'}" player-id="${this.playerId}" id="${nextShieldId}"></p-shield>
+         </div>
+      </div>
     `;
   }
 

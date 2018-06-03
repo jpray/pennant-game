@@ -1,7 +1,7 @@
 pennant-game {
   display:block;
-  min-height:200px;
-  min-width:200px;
+  min-height:10rem;
+  min-width:10rem;
 }
 
 .hide {
