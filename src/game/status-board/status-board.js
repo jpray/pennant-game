@@ -72,8 +72,8 @@ export class StatusBoard extends baseView() {
              <button onclick="${this.makeBigger}" id="scale-bigger">+</button><br><br>
 
 
-      <div class="player-info"><span class="player-swatch player-one-swatch"></span> Player 1 Penants: ${this.player0Points} ${this.winningPlayer === 0 ? 'Winner!' : ''}</div>
-      <div class="player-info"><span class="player-swatch player-two-swatch"></span> Player 2 Penants: ${this.player1Points} ${this.winningPlayer === 1 ? 'Winner!' : ''}</div>
+      <div class="player-info"><span class="player-swatch player-one-swatch"></span> Player 1 Pennants: ${this.player0Points} ${this.winningPlayer === 0 ? 'Winner!' : ''}</div>
+      <div class="player-info"><span class="player-swatch player-two-swatch"></span> Player 2 Pennants: ${this.player1Points} ${this.winningPlayer === 1 ? 'Winner!' : ''}</div>
     `;
   }
 	addEventListeners() {

@@ -1,4 +1,4 @@
-import appCh, { MOVE_ENDED, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE, PUSH_PIECE } from './app-channel';
+import appCh, { MOVE_ENDED, TURN_START, TURN_ENDED, UPDATE_POINTS, UPDATE_WINNER, UPDATE_CURRENT_PLAYER, MOVE_PIECE, PUSH_PIECE } from './app-channel';
 import appModel from './app-model';
 import turnModel from './turn-model';
 import {getCurrentCellForPiece} from 'common/tasks/get-current-cell-for-piece';
@@ -10,20 +10,34 @@ import {Push} from './actions/push.action';
 
 const appChSubscriber = appCh.createSubscriber();
 
-appChSubscriber.on(TURN_ENDED, function() {
+appChSubscriber.on(TURN_START, function() {
   appCh.publish(UPDATE_POINTS);
   appCh.publish(UPDATE_WINNER);
+})
+
+appChSubscriber.on(TURN_ENDED, function() {
   appCh.publish(UPDATE_CURRENT_PLAYER);
   turnModel.reset();
+  appCh.publish(TURN_START);
 })
 
 appChSubscriber.on(UPDATE_POINTS, function() {
-  let pieceInWinningCell = getCurrentPieceForCell('22');
-
-  if (pieceInWinningCell) {
-    const player = Number(pieceInWinningCell.pieceId[0]);
-    appModel.update(`players.${player}.points`, value => value + 1 );
+  let winningCellId = '22';
+  let pieceInWinningCell = getCurrentPieceForCell(winningCellId);
+  if (!pieceInWinningCell || appModel.get(`game.currentPlayer`) !== pieceInWinningCell.playerId) {
+    return;
   }
+  const player = Number(pieceInWinningCell.pieceId[0]);
+
+  setTimeout(function() {
+    let claimPennant = window.confirm(`Player ${player+1}, would you like to claim your pennant?`);
+    if (claimPennant) {
+      let winningPieceState = getCurrentPieceForCell(winningCellId);
+      winningPieceState.cellId = 'graveyard';
+      appModel.setPieceStateById(winningPieceState.pieceId, winningPieceState);
+      appModel.update(`players.${player}.points`, value => value + 1 );
+    }
+  },0)
 })
 
 appChSubscriber.on(UPDATE_WINNER, function() {
@@ -62,10 +76,14 @@ appChSubscriber.on(MOVE_PIECE, function(piece, cell) {
   pieceState.cellId = action.endingCellId;
   appModel.setPieceStateById(action.pieceId, pieceState);
   turnModel.set('activePieceData', appModel.getPieceStateById(action.pieceId));
-  appCh.publish(MOVE_ENDED);
+  appCh.publish(MOVE_ENDED, action);
 })
 
-appChSubscriber.on(MOVE_ENDED, function() {
+appChSubscriber.on(MOVE_ENDED, function(moveAction) {
+  if (!moveAction.startingCellId || moveAction.startingCellId.includes('sideline')) {
+    appCh.publish(TURN_ENDED);
+    return;
+  }
   turnModel.calculateAllowedPushCells();
   if (turnModel.get('allowedPushCells').length === 0) {
     appCh.publish(TURN_ENDED);
@@ -99,7 +117,7 @@ appChSubscriber.on(PUSH_PIECE, function(piece, pushedPiece, xChange, yChange) {
 
   doPush(getCurrentCellForPiece(action.pushedPieceId), action.xChange, action.yChange);
 
-  appCh.publish(MOVE_ENDED);
+  appCh.publish(TURN_ENDED);
 })
 
 function computePushCellId(cellId, xChange, yChange) {
