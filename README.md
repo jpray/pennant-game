@@ -26,6 +26,9 @@ The CSS for pieces (sword/spear/shield) is here:
 src/game/pieces/pieces.css
 
 The HTML for pieces (sword/spear/shield) is here inside of the render() methods:
+
 src/game/pieces/shield.piece.js
+
 src/game/pieces/spear.piece.js
+
 src/game/pieces/sword.piece.js
