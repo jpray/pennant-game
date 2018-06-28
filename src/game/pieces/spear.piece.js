@@ -11,7 +11,8 @@ export class Spear extends Piece {
   }
 
   render() {
-    return this.html`
+    return this.
+    html`
       <a href="#" class="${'piece-for-player'+this.playerId}">
         <img width="100%" height="100%" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Spear.svg">
       </a>
